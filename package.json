@@ -8,8 +8,7 @@
     "build": "node scripts/build.js && electron-builder",
     "build:win": "node scripts/build.js && electron-builder --win",
     "build:mac": "node scripts/build.js && electron-builder --mac",
-    "build:linux": "node scripts/build.js && electron-builder --linux",
-    "build:linux-deb": "node scripts/build.js && electron-builder --linux deb"
+    "build:linux": "node scripts/build.js && electron-builder --linux"
   },
   "author": {
     "name": "Rizkhal",

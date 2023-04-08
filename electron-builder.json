@@ -1,41 +1,44 @@
 {
-    "appId": "com.electron.app",
-    "directories": {
-        "output": "dist"
+  "appId": "com.aniflix.app",
+  "directories": {
+    "output": "dist"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true,
+    "shortcutName": "AniFlix"
+  },
+  "win": {
+    "target": "nsis",
+    "icon": "build/renderer/aniflix512.png"
+  },
+  "linux": {
+    "target": ["deb"],
+    "category": "Video",
+    "icon": "build/renderer/aniflix512.png"
+  },
+  "files": [
+    "build/main/**/*",
+    {
+      "from": "build/renderer",
+      "to": "renderer",
+      "filter": ["**/*"]
     },
-    "nsis": {
-        "oneClick": false,
-        "perMachine": false,
-        "allowToChangeInstallationDirectory": true,
-        "shortcutName": "Electron App"
+    {
+      "from": "src/main/static",
+      "to": "static",
+      "filter": ["**/*"]
     },
-    "win": {
-        "target": "nsis"
-    },
-    "linux":  {
-        "target": ["snap"]
-    },
-    "files": [
-        "build/main/**/*",
-        {
-            "from": "build/renderer",
-            "to": "renderer",
-            "filter": ["**/*"]
-        },
-        {
-            "from": "src/main/static",
-            "to": "static",
-            "filter": ["**/*"]
-        },
-        "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
-        "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
-        "!**/node_modules/*.d.ts",
-        "!**/node_modules/.bin",
-        "!src",
-        "!config",
-        "!README.md",
-        "!scripts",
-        "!build/renderer",
-        "!dist"
-    ]
+    "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+    "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+    "!**/node_modules/*.d.ts",
+    "!**/node_modules/.bin",
+    "!src",
+    "!config",
+    "!README.md",
+    "!scripts",
+    "!build/renderer",
+    "!dist"
+  ]
 }
