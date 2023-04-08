@@ -1,3 +1,5 @@
+export * from "./useAuth";
+export * from './useWelcome'
 export * from "./useServer";
 export * from "./useAnimeInfo";
 export * from "./useWatchAnime";

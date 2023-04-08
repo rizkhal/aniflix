@@ -4,15 +4,14 @@ import {
   ipcMain,
   OnHeadersReceivedListenerDetails,
   session,
-  Menu,
-  MenuItem,
 } from "electron";
 import { join } from "path";
+import setApplicationMenu from "./menu";
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
     show: false,
-    icon: join(__dirname, "./static/aniflix512.png"),
+    icon: join(__dirname, "./static/icon.png"),
     webPreferences: {
       preload: join(__dirname, "preload.js"),
       nodeIntegration: true,
@@ -24,24 +23,7 @@ function createWindow() {
   mainWindow.maximize();
   mainWindow.show();
 
-  const menu = new Menu();
-  menu.append(
-    new MenuItem({
-      label: "Electron",
-      submenu: [
-        {
-          role: "help",
-          accelerator:
-            process.platform === "darwin" ? "Alt+Cmd+I" : "Alt+Shift+I",
-          click: () => {
-            console.log("Electron rocks!");
-          },
-        },
-      ],
-    })
-  );
-
-  // Menu.setApplicationMenu(menu);
+  setApplicationMenu();
 
   if (process.env.NODE_ENV === "development") {
     const rendererPort = process.argv[2];
@@ -76,8 +58,4 @@ app.whenReady().then(() => {
 
 app.on("window-all-closed", function () {
   if (process.platform !== "darwin") app.quit();
-});
-
-ipcMain.on("message", (event, message) => {
-  console.log(message);
 });

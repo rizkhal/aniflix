@@ -11,12 +11,12 @@
   },
   "win": {
     "target": "nsis",
-    "icon": "build/renderer/aniflix512.png"
+    "icon": "build/main/static/icon.png"
   },
   "linux": {
     "target": ["deb"],
     "category": "Video",
-    "icon": "build/renderer/aniflix512.png"
+    "icon": "build/main/static/icon.png"
   },
   "files": [
     "build/main/**/*",

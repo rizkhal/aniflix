@@ -87,7 +87,8 @@ const addToFavorit = () => {
             </span>
           </div>
         </div>
-        <div class="mt-10">
+        <!-- FIXME: next release -->
+        <!-- <div class="mt-10">
           <button
             @click="addToFavorit"
             class="inline-flex items-center space-x-1 px-3 py-2 rounded text-primary-50 bg-primary-500 hover:bg-primary-600"
@@ -95,7 +96,7 @@ const addToFavorit = () => {
             <Icon name="HeartIcon" class="w-4 h-4" />
             <span class="text-xs font-body">Tambah ke Favorit</span>
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
 

@@ -1,35 +1,29 @@
 <script setup lang="ts">
-import { Ref, ref, reactive } from "vue";
+import { reactive } from "vue";
 import { useRouter } from "vue-router";
-import f from "wretch";
 import { LoginCredentials } from "../typings";
+import { useAuth, useWelcome } from "../stores";
 import Logo from "../components/Logo.vue";
+import { storeToRefs } from "pinia";
 
-type Error = {
-  message?: string;
-};
+const isDev = import.meta.env.DEV;
 
 const router = useRouter();
-const errors: Ref<Error | undefined> = ref();
+const store = useAuth();
+const welcome = useWelcome();
 const model: LoginCredentials = reactive({
-  username: "demo",
-  password: "secret",
+  username: isDev ? "demo" : "",
+  password: isDev ? "secret" : "",
 });
 
-const BASE_URL = import.meta.env.VITE_ANIFLIX_API_URL;
+const { loading, errors } = storeToRefs(store);
 
 const login = () => {
-  f(`${BASE_URL}/api/auth/login`)
-    .post(model)
-    .badRequest((err) => {
-      errors.value = JSON.parse(err.message);
-    })
-    .json(({ user, token }) => {
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", JSON.stringify(token));
-
-      router.push("home");
-    });
+  store.login(model).then(() => {
+    loading.value = false;
+    welcome.show(true);
+    router.push("home");
+  });
 };
 </script>
 <template>
@@ -62,7 +56,7 @@ const login = () => {
             <Logo />
           </div>
           <div
-            v-show="errors?.message"
+            v-show="errors"
             class="flex p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50"
             role="alert"
           >
@@ -81,7 +75,7 @@ const login = () => {
             </svg>
             <span class="sr-only">Info</span>
             <div>
-              {{ errors?.message }}
+              {{ errors }}
             </div>
           </div>
 
@@ -107,9 +101,11 @@ const login = () => {
           </div>
           <button
             type="submit"
-            class="text-white bg-primary-500 rounded-md border-0 py-2 px-8 focus:outline-none hover:bg-primary-600 text-lg"
+            :disabled="loading"
+            class="disabled:bg-primary-400 disabled:cursor-not-allowed text-white bg-primary-500 rounded-md border-0 py-2 px-8 focus:outline-none hover:bg-primary-600 text-lg"
           >
-            Login
+            <span v-show="loading">Loading..</span>
+            <span v-show="!loading">Login</span>
           </button>
         </form>
       </div>
