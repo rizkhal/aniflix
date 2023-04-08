@@ -20,7 +20,7 @@ const routes = [
     name: "latest",
     path: "/latest/:page?",
     meta: {
-      title: "Semua Anime",
+      title: "Semua Anime Baru Diupload",
       backButton: true,
     },
     component: () => import("../screens/Latest.vue"),

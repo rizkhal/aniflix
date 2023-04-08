@@ -7,7 +7,9 @@ defineProps<{
 }>();
 </script>
 <template>
-  <ul class="w-full h-[30em] border-t overflow-y-auto divide-y divide-gray-200">
+  <ul
+    class="w-full h-[30em] border-t hide-scroll-bar overflow-y-auto divide-y divide-gray-200"
+  >
     <EspisodeListItem
       :episode="episode"
       v-for="(episode, index) in episodes"

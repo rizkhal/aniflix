@@ -5,6 +5,7 @@ import type { AnimeInfo } from "../typings";
 export const useAnimeInfo = defineStore("animeInfo", {
   state: (): AnimeInfo => ({
     info: null,
+    animeId: null,
     loading: true,
   }),
   actions: {
@@ -15,6 +16,7 @@ export const useAnimeInfo = defineStore("animeInfo", {
         .get()
         .json(({ data }) => {
           this.info = data;
+          this.animeId = animeId;
         })
         .finally(() => {
           this.loading = false;

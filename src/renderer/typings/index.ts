@@ -36,6 +36,7 @@ export type Info = {
 
 export type AnimeInfo = {
   loading: boolean;
+  animeId: string | string[] | null;
   info: Info | null;
 };
 

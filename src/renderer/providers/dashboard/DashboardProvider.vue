@@ -1,21 +1,27 @@
 <script setup lang="ts">
+import Modal from "./Modal.vue";
+import Navbar from "./Navbar.vue";
 import Leftbar from "./Leftbar.vue";
 import Rightbar from "./Rightbar.vue";
-import Navbar from "./Navbar.vue";
-import Modal from "./Modal.vue";
-import { ref, provide, Ref, getCurrentInstance } from "vue";
+import { ref, provide, Ref, getCurrentInstance, computed } from "vue";
+import { RouteLocationNormalizedLoaded, useRoute } from "vue-router";
 
 const modalRef: Ref<undefined> = ref();
 const instance = getCurrentInstance();
+const route: RouteLocationNormalizedLoaded = useRoute();
 
 provide("modalRef", modalRef);
 provide("appContext", instance ? instance.appContext : null);
+
+const hasRightbar = computed(
+  () => typeof route.meta.rightBar === "undefined" || route.meta.rightBar
+);
 </script>
 <template>
   <div class="flex min-h-screen w-full">
     <Modal ref="modalRef" />
 
-    <div class="flex flex-wrap w-10/12">
+    <div class="flex flex-wrap" :class="[hasRightbar ? 'w-10/12' : 'w-full']">
       <Leftbar />
 
       <div
@@ -29,8 +35,6 @@ provide("appContext", instance ? instance.appContext : null);
         </div>
       </div>
     </div>
-    <Rightbar
-      v-if="typeof $route.meta.rightBar === 'undefined' || $route.meta.rightBar"
-    />
+    <Rightbar v-show="hasRightbar" />
   </div>
 </template>

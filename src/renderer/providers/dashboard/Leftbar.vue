@@ -25,7 +25,7 @@ const logout = () => {
     <div
       class="mt-4 pl-4 mb-4 flex flex-col gap-y-4 text-gray-500 fill-gray-500 text-sm"
     >
-      <div class="text-gray-400/70 font-medium uppercase">Menu</div>
+      <div class="text-gray-400/70 font-medium uppercase font-body">Menu</div>
       <router-link
         v-for="(menu, index) in menus"
         :key="index.toString()"
@@ -33,10 +33,12 @@ const logout = () => {
         :to="menu.route"
       >
         <Icon :name="menu.icon" class="w-5 h-5" />
-        <span>{{ menu.label }}</span>
+        <span class="font-body text-sm">{{ menu.label }}</span>
       </router-link>
 
-      <div class="mt-8 text-gray-400/70 font-medium uppercase">General</div>
+      <div class="mt-8 text-gray-400/70 font-medium uppercase font-body">
+        General
+      </div>
       <router-link
         :to="general.route"
         class="flex items-center space-x-2 py-1 group hover:border-r-4 hover:border-r-primary-600 hover:font-semibold"
@@ -45,7 +47,7 @@ const logout = () => {
         :key="index.toString()"
       >
         <Icon :name="general.icon" class="w-5 h-5" />
-        <span>{{ general.label }}</span>
+        <span class="font-body text-sm">{{ general.label }}</span>
       </router-link>
 
       <button

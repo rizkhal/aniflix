@@ -1,25 +1,34 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { Ref, inject, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useAnimeInfo } from "../stores";
 import { useRoute, RouteLocationNormalizedLoaded } from "vue-router";
 import Icon from "../components/Icon.vue";
 import EpisodeLists from "../components/card/EpisodeLists.vue";
+import DetailSkeleton from "../components/skeleton/DetailSkeleton.vue";
+import { toast } from "vue3-toastify";
 
-const route: RouteLocationNormalizedLoaded = useRoute();
 const animex = useAnimeInfo();
+const modal: any = inject<Ref>("modalRef");
+const route: RouteLocationNormalizedLoaded = useRoute();
 
 const { animeId } = route.params;
 animex.fetch(animeId);
 
 const { info, loading } = storeToRefs(animex);
 
-onMounted(() => {
-  //
-});
+onMounted(() => {});
+
+const addToFavorit = () => {
+  toast("Wow so easy !", {
+    theme: "auto",
+  });
+};
 </script>
 
 <template>
+  <DetailSkeleton v-if="loading" />
+
   <div v-if="!loading && info">
     <div class="flex flex-row space-x-4 mt-4">
       <div class="relative w-96 h-96 rounded-lg overflow-hidden cursor-pointer">
@@ -44,7 +53,7 @@ onMounted(() => {
               v-for="(genre, index) in info.genre"
               :key="index"
             >
-              <span class="text-sm">{{ genre }}</span>
+              <span class="text-xs">{{ genre }}</span>
             </div>
           </div>
           <div class="inline-flex items-center space-x-1.5">
@@ -77,6 +86,15 @@ onMounted(() => {
               {{ info.rating.ratingValue }} / {{ info.rating.ratingCount }}
             </span>
           </div>
+        </div>
+        <div class="mt-10">
+          <button
+            @click="addToFavorit"
+            class="inline-flex items-center space-x-1 px-3 py-2 rounded text-primary-50 bg-primary-500 hover:bg-primary-600"
+          >
+            <Icon name="HeartIcon" class="w-4 h-4" />
+            <span class="text-xs font-body">Tambah ke Favorit</span>
+          </button>
         </div>
       </div>
     </div>

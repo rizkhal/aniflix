@@ -6,6 +6,7 @@ import { useRoute, RouteLocationNormalizedLoaded } from "vue-router";
 import type { VideoStreamingSource, AvailableAnimeServer } from "../typings";
 import VideoLoading from "../components/skeleton/VideoLoadingSkeleton.vue";
 import VideoDetailLoadingSkeleton from "../components/skeleton/VideoDetailLoadingSkeleton.vue";
+import EpisodeLists from "../components/card/EpisodeLists.vue";
 
 const servers = ref<AvailableAnimeServer[]>([]);
 const infoAnimeStore = useAnimeInfo();
@@ -13,7 +14,7 @@ const watchAnimeStore = useWatchAnime();
 const route: RouteLocationNormalizedLoaded = useRoute();
 
 const { episodeId } = route.params;
-const { info, loading: infoLoading } = storeToRefs(infoAnimeStore);
+const { animeId, info, loading: infoLoading } = storeToRefs(infoAnimeStore);
 const { videosMP4, loading, filteredAvaillableServer } =
   storeToRefs(watchAnimeStore);
 
@@ -65,7 +66,11 @@ watch(
     <VideoDetailLoadingSkeleton v-if="loading || infoLoading" />
     <div v-else class="flex flex-row justify-between space-x-4 mt-4">
       <div>
-        <h1 class="text-2xl font-body text-primary-600">{{ info?.title }}</h1>
+        <RouterLink
+          :to="{ name: 'detail', params: { animeId: animeId } }"
+          class="text-2xl font-body text-primary-600"
+          >{{ info?.title }}</RouterLink
+        >
       </div>
       <div>
         <div class="inline-flex space-x-2">
@@ -88,6 +93,12 @@ watch(
             </option>
           </select>
         </div>
+      </div>
+    </div>
+    <div class="mt-8">
+      <div v-if="!loading && !infoLoading">
+        <h1 class="mb-3 font-body">Daftar Episode {{ info?.title }}</h1>
+        <EpisodeLists v-if="info" :episodes="info.episodes" />
       </div>
     </div>
   </div>

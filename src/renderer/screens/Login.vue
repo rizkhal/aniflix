@@ -16,7 +16,7 @@ const model: LoginCredentials = reactive({
   password: "secret",
 });
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = import.meta.env.VITE_ANIFLIX_API_URL;
 
 const login = () => {
   f(`${BASE_URL}/api/auth/login`)

@@ -45,7 +45,7 @@ watch(
         type="text"
         v-model="search"
         placeholder="Search..."
-        class="w-full py-4 pl-12 border-b border-gray-100 outline-none placeholder-gray-400"
+        class="w-full py-4 pl-12 outline-none placeholder-gray-400"
       />
 
       <div class="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -62,7 +62,7 @@ watch(
     <div class="overflow-auto">
       <ul
         v-show="!loading && data.length"
-        class="w-full max-h-[36em] border-t overflow-y-auto divide-y divide-gray-200"
+        class="w-full max-h-[36em] overflow-y-auto divide-y divide-gray-200"
       >
         <li
           v-for="(item, index) in data"

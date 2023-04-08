@@ -54,9 +54,9 @@ const toRight = () => {
     </div>
   </div>
 
-  <div class="relative overflow-auto mt-4 hide-scroll-bar">
-    <div class="w-full bg-white shadow-xl min-w-0">
-      <div ref="containerRef" class="inline-flex space-x-4">
+  <div  ref="containerRef" class="relative overflow-auto mt-4 hide-scroll-bar">
+    <div class="w-full bg-gray-100 shadow-xl min-w-0">
+      <div class="inline-flex space-x-4">
         <slot />
       </div>
     </div>

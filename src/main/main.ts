@@ -12,6 +12,7 @@ import { join } from "path";
 function createWindow() {
   const mainWindow = new BrowserWindow({
     show: false,
+    icon: join(__dirname, "./static/aniflix512.png"),
     webPreferences: {
       preload: join(__dirname, "preload.js"),
       nodeIntegration: true,

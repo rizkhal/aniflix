@@ -22,7 +22,7 @@ onMounted(() => {
 </script>
 <template>
   <div class="flex flex-col space-y-8">
-    <MovieCardContainer title="On Going" icon="FireIcon">
+    <MovieCardContainer title="Sedang Berlangsung" icon="FireIcon">
       <FeedCardSkeleton
         v-if="onGoingLoading"
         v-for="(_, index) in Array.from({ length: 7 })"
@@ -40,7 +40,7 @@ onMounted(() => {
     </MovieCardContainer>
 
     <div class="flex flex-row justify-between items-center">
-      <MovieCardTitle title="Latest" icon="ClockIcon" />
+      <MovieCardTitle title="Baru Diupload" icon="ClockIcon" />
       <RouterLink
         to="/latest"
         href="#"

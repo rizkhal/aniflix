@@ -15,7 +15,7 @@ defineProps<{
       title="Mountain"
     ></div>
     <div
-      class="w-full border border-l-none bg-white p-2 flex flex-col justify-between leading-normal rounded-r-none md:rounded-r"
+      class="w-full border border-l-none bg-white shadow p-2 flex flex-col justify-between leading-normal rounded-r-none md:rounded-r"
     >
       <div class="mb-5">
         <RouterLink
@@ -33,7 +33,7 @@ defineProps<{
           <Icon
             name="PlayCircleIcon"
             type="solid"
-            class="w-5 h-5 fill-primary-500"
+            class="w-4 h-4 fill-primary-500"
           />
           <span class="text-xs text-slate-500">{{ item.episode }}</span>
         </div>
@@ -41,7 +41,7 @@ defineProps<{
           <Icon
             name="UserCircleIcon"
             type="solid"
-            class="w-5 h-5 fill-primary-500"
+            class="w-4 h-4 fill-primary-500"
           />
           <span class="text-xs text-slate-500">{{ item.author }}</span>
         </div>
@@ -49,7 +49,7 @@ defineProps<{
           <Icon
             name="CalendarIcon"
             type="solid"
-            class="w-5 h-5 fill-primary-500"
+            class="w-4 h-4 fill-primary-500"
           />
           <span class="text-xs text-slate-500">{{ item.release }}</span>
         </div>
