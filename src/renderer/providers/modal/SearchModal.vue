@@ -20,7 +20,7 @@ watch(
 </script>
 <template>
   <div>
-    <form class="relative flex items-center" action="#">
+    <form class="relative flex items-center border-b" action="#">
       <div
         class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
       >
@@ -49,7 +49,7 @@ watch(
       />
 
       <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-        <LoadingSpinner v-if="loading" class="text-slate-200" />
+        <LoadingSpinner v-if="loading" class="text-slate-500" />
         <button
           v-else
           class="flex items-center p-1.5 uppercase font-semibold tracking-wider text-gray-700 rounded-md border border-gray-200 focus:outline-none focus:border-gray-300 text-xxs"

@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useAnime } from "../stores";
+import { useAnimeLatest } from "../stores";
 import { onMounted, ref, watch } from "vue";
 import Pagination from "../components/Pagination.vue";
 import MovieWatchCard from "../components/card/MovieWatchCard.vue";
 import WatchListCardSkeleton from "../components/skeleton/WatchListCardSkeleton.vue";
 
-const animex = useAnime();
+const animex = useAnimeLatest();
 
 const page = ref(1);
 
 onMounted(() => {
-  animex.fetchLatest();
+  animex.fetch();
 });
 
-const { latest, loading, hasMorePages } = storeToRefs(animex);
+const { data, loading, hasMorePages } = storeToRefs(animex);
 
 const onPrev = () => {
   if (page.value > 1) {
@@ -30,7 +30,7 @@ const onNext = () => {
 
 watch(
   () => page.value,
-  (val) => animex.fetchLatest(val)
+  (val) => animex.fetch(val)
 );
 </script>
 <template>
@@ -43,7 +43,7 @@ watch(
       />
       <MovieWatchCard
         v-else
-        v-for="(item, index) in latest"
+        v-for="(item, index) in data"
         :key="index.toString()"
         :item="item"
       />

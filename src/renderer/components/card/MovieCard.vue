@@ -7,8 +7,12 @@ defineProps<{
 }>();
 </script>
 <template>
-  <div class="relative rounded-lg overflow-hidden cursor-pointer">
-    <img :src="item.cover" class="object-cover w-72 h-96" :alt="item.title" />
+  <div class="flex-shrink-0 relative rounded-lg overflow-hidden cursor-pointer">
+    <img
+      :src="item.cover"
+      class="object-cover self-center w-60 h-80"
+      :alt="item.title"
+    />
     <div
       class="absolute top-0 h-full w-full bg-gradient-to-t from-black p-3 flex flex-col justify-end"
     >

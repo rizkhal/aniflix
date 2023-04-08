@@ -2,7 +2,7 @@
 import Leftbar from "./Leftbar.vue";
 import Rightbar from "./Rightbar.vue";
 import Navbar from "./Navbar.vue";
-import Modal from "../../components/Modal.vue";
+import Modal from "./Modal.vue";
 import { ref, provide, Ref, getCurrentInstance } from "vue";
 
 const modalRef: Ref<undefined> = ref();
@@ -15,7 +15,7 @@ provide("appContext", instance ? instance.appContext : null);
   <div class="flex min-h-screen w-full">
     <Modal ref="modalRef" />
 
-    <div class="flex flex-wrap w-full">
+    <div class="flex flex-wrap w-10/12">
       <Leftbar />
 
       <div

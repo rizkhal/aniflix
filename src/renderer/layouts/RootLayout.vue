@@ -25,7 +25,7 @@ export default defineComponent({
 
 <template>
   <component :is="layout">
-    <router-view v-slot="{ Component, route }" class="flex-1">
+    <router-view v-slot="{ Component, route }">
       <transition name="page">
         <component :is="Component" :key="route.path" />
       </transition>

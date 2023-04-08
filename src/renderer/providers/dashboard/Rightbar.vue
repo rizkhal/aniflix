@@ -22,7 +22,7 @@ const openModal = () => {
 </script>
 <template>
   <aside
-    class="w-1/4 py-10 px-4 min-w-min border-l bg-gray-100 border-gray-300 hidden lg:block"
+    class="w-1/2 md:w-1/3 lg:w-1/5 px-5 border-l py-10 h-screen lg:block bg-gray-100 border-r z-30"
   >
     <button
       @click="openModal"
