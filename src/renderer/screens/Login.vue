@@ -107,6 +107,14 @@ const login = () => {
             <span v-show="loading">Loading..</span>
             <span v-show="!loading">Login</span>
           </button>
+          <div class="flex flex-col items-center justify-center mt-4">
+            <span class="font-body text-slate-700">Or</span>
+            <RouterLink
+              :to="{ name: 'home' }"
+              class="text-primary-500 font-body flex justify-center"
+              >Continue without Account</RouterLink
+            >
+          </div>
         </form>
       </div>
     </div>

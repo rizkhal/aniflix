@@ -23,7 +23,7 @@ function createWindow() {
   mainWindow.maximize();
   mainWindow.show();
 
-  setApplicationMenu();
+  // setApplicationMenu();
 
   if (process.env.NODE_ENV === "development") {
     const rendererPort = process.argv[2];

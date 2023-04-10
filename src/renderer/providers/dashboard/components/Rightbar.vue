@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { h, Ref, inject, onMounted } from "vue";
-import SearchModal from "../modal/SearchModal.vue";
-import { useAnimeRecomendation } from "../../stores";
+import SearchModal from "../../modal/components/SearchModal.vue";
+import { useAnimeRecomendation } from "../../../stores";
 
 const animex = useAnimeRecomendation();
 const modal: any = inject<Ref>("modalRef");

@@ -2,11 +2,9 @@
 import {
   Dialog,
   DialogPanel,
-  DialogTitle,
   TransitionRoot,
   TransitionChild,
 } from "@headlessui/vue";
-import { appendContent } from "video.js/dist/types/utils/dom";
 import {
   h,
   ref,
@@ -19,16 +17,30 @@ import {
   watch,
   inject,
   AppContext,
+  onMounted,
+  getCurrentInstance,
 } from "vue";
 import { RouteLocationNormalizedLoaded, useRoute } from "vue-router";
+import { setInstance } from "../../../hooks/useModal";
 
 const route: RouteLocationNormalizedLoaded = useRoute();
 
 const context = inject<AppContext | null>("appContext", null);
 
-const props: { position: string; maxWidth: string } = reactive({
+type CustomProps = {
+  id: string;
+  position: string;
+  maxWidth: string;
+  onBackdropPress: Function;
+};
+
+const props: CustomProps = reactive({
+  id: "modal",
   position: "top-center",
   maxWidth: "md",
+  onBackdropPress: () => {
+    closeModal();
+  },
 });
 
 const positionClass = computed(() => {
@@ -58,17 +70,19 @@ function closeModal() {
 }
 
 type Modal = {
+  id: string;
   body: VNode;
 };
 
-const modal: Modal = reactive({
-  body: h("div"),
-});
+const instance = getCurrentInstance();
 
-function openModal({ body }: Modal) {
+function openModal({ id, body }: Modal) {
   isOpen.value = true;
 
   Object.assign(props, body.props);
+
+  // set modal instance
+  setInstance(id, instance?.exposed);
 
   body.appContext = context;
 
@@ -93,7 +107,7 @@ watch(
 </script>
 <template>
   <TransitionRoot appear :show="isOpen" as="template">
-    <Dialog as="div" @close="closeModal" class="relative z-50">
+    <Dialog as="div" @close="props.onBackdropPress" class="relative z-50">
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"

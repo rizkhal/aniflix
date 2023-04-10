@@ -7,16 +7,16 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const authRequired = !["/"].includes(to.path);
-  const loggedIn = localStorage.getItem("token");
+  // const authRequired = !["/"].includes(to.path);
+  // const loggedIn = localStorage.getItem("token");
 
-  if (authRequired && !loggedIn) {
-    next("/");
-  } else if (loggedIn && to.name === "login") {
-    next("/home");
-  } else {
+  // if (authRequired && !loggedIn) {
+  //   next("/");
+  // } else if (loggedIn && to.name === "login") {
+  //   next("/home");
+  // } else {
     next();
-  }
+  // }
 });
 
 export default router;

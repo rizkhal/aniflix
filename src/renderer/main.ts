@@ -1,9 +1,12 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
+
 import "./style.scss";
+
 import App from "./App.vue";
 import router from "./routes";
-import registerLayout from "./layouts/registerLayout";
+import layout from "./layouts/registerLayout";
+import component from "./components/registerComponent";
 
 import VueVideoPlayer from "@videojs-player/vue";
 import "video.js/dist/video-js.css";
@@ -16,11 +19,15 @@ const store = createPinia();
 
 app.use(router);
 app.use(store);
+
 app.use(VueVideoPlayer);
+
+// custom layout & component
+app.use(layout);
+app.use(component);
+
 app.use(Vue3Toastify, {
   autoClose: 3000,
 } as ToastContainerOptions);
 
 app.mount("#app");
-
-registerLayout(app);

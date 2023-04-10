@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="VEspisodeListItem">
 import { Episode } from "../../typings";
 import Icon from "../Icon.vue";
 

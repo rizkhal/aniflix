@@ -1,3 +1,6 @@
+<script lang="ts" setup name="VLoadingSpinner">
+//
+</script>
 <template>
   <svg
     class="animate-spin h-6 w-6"

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { debounce } from "../../utils";
+import { debounce } from "../../../utils";
 import { storeToRefs } from "pinia";
-import { useSearch } from "../../stores/useSearch";
-import LoadingSpinner from "../../components/LoadingSpinner.vue";
-import Icon from "../../components/Icon.vue";
+import { useSearch } from "../../../stores/useSearch";
+import LoadingSpinner from "../../../components/LoadingSpinner.vue";
+import Icon from "../../../components/Icon.vue";
 
 const store = useSearch();
 const search = ref<string | null>();

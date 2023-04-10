@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { menus, generals } from "./menus";
-import Icon from "../../components/Icon.vue";
-import Logo from "../../components/Logo.vue";
+import { menus, generals } from "../menus";
+import Icon from "../../../components/Icon.vue";
+import Logo from "../../../components/Logo.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
 const logout = () => {
-  localStorage.removeItem("token");
+  localStorage.clear();
   router.push({ name: "login" });
 };
 </script>

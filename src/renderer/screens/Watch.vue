@@ -51,6 +51,8 @@ watch(
 </script>
 <template>
   <div>
+    {{ sources }}
+
     <VideoLoading v-if="loading" />
     <VideoPlayer
       v-else

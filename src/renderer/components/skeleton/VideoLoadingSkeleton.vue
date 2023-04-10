@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="VVideoLoadingSkeleton">
 import LoadingSpinner from "../LoadingSpinner.vue";
 </script>
 <template>

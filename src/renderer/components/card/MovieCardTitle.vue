@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="VMovieCardTitle">
 import Icon from "../Icon.vue";
 
 const props = defineProps<{

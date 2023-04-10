@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="VMovieCard">
 import type { AnimeItem } from "../../typings/index";
 import Icon from "../Icon.vue";
 
@@ -9,7 +9,7 @@ defineProps<{
 <template>
   <div class="flex-shrink-0 relative rounded-lg overflow-hidden cursor-pointer">
     <img
-      :src="item.cover"
+      :src="item.image"
       class="object-cover self-center w-60 h-80"
       :alt="item.title"
     />
@@ -19,7 +19,10 @@ defineProps<{
       <div class="flex flex-col items-center space-y-2">
         <div class="absolute w-full inset-x-0 top-3">
           <div class="flex flex-row justify-between px-3">
-            <div class="px-2 py-0.5 bg-primary-600/80 rounded text-slate-50">
+            <div
+              v-show="item.type"
+              class="px-2 py-0.5 bg-primary-600/80 rounded text-slate-50"
+            >
               {{ item.type }}
             </div>
             <div
@@ -30,7 +33,7 @@ defineProps<{
                 type="solid"
                 class="w-5 h-5 text-yellow-400"
               />
-              <span class="text-slate-50">{{ item.score }}</span>
+              <span class="text-slate-50">{{ item.score }} N/A</span>
             </div>
           </div>
         </div>

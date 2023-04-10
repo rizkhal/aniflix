@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="VPagination">
 const props = defineProps<{
   currentPage: number;
   hasMorePages: boolean;

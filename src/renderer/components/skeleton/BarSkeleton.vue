@@ -1,3 +1,6 @@
+<script setup lang="ts" name="VBarSkeleton">
+//
+</script>
 <template>
   <div role="status" class="max-w-sm animate-pulse">
     <div class="h-2.5 bg-gray-200 rounded-full w-48 mb-2"></div>

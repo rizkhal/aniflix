@@ -9,6 +9,7 @@ declare module "*.vue" {
 }
 interface ImportMetaEnv {
   readonly VITE_ANIFLIX_API_URL: string;
+  readonly VITE_ANIME_PROVIDERS: string;
 }
 
 interface ImportMeta {

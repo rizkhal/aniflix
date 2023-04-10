@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="VAuthRequiredModal">
 import { inject } from "vue";
 
 const props = defineProps<{

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Modal from "./Modal.vue";
-import Navbar from "./Navbar.vue";
-import Leftbar from "./Leftbar.vue";
-import Rightbar from "./Rightbar.vue";
+import Modal from "./components/Modal.vue";
+import Navbar from "./components/Navbar.vue";
+import Leftbar from "./components/Leftbar.vue";
+import Rightbar from "./components/Rightbar.vue";
 import { ref, provide, Ref, getCurrentInstance, computed } from "vue";
 import { RouteLocationNormalizedLoaded, useRoute } from "vue-router";
 

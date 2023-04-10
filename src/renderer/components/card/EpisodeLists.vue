@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="VEpisodeLists">
 import type { Episode } from "../../typings";
 import EspisodeListItem from "./EspisodeListItem.vue";
 

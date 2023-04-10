@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="VLogo">
 import Logo from "../assets/img/aniflix.svg";
 </script>
 <template>

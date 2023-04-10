@@ -3,7 +3,7 @@
     <component :is="iconName"></component>
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" name="VIcon">
 import { h, ref, onMounted, RendererElement } from "vue";
 
 const iconName: RendererElement = ref();

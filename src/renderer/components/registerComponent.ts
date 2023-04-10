@@ -8,12 +8,12 @@ import { ModuleNamespace } from "vite/types/hot";
  */
 export default {
   install(app: App<Element>) {
-    const layouts = import.meta.glob<ModuleNamespace>("../layouts/*.vue", {
+    const components = import.meta.glob<ModuleNamespace>("./**/*.vue", {
       eager: true,
     });
 
-    Object.entries(layouts).forEach(([, layout]) => {
-      app.component(layout?.default?.name, layout?.default);
+    Object.entries(components).forEach(([, component]) => {
+      app.component(component?.default?.name, component?.default);
     });
   },
 };

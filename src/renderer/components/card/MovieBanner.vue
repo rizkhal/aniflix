@@ -1,3 +1,6 @@
+<script setup lang="ts" name="VMovieBanner">
+//
+</script>
 <template>
   <div
     class="flex flex-col justify-between mt-4 bg-black/10 bg-blend-multiply rounded-3xl h-80 overflow-hidden bg-cover bg-center px-7 pt-4 pb-6 text-white"

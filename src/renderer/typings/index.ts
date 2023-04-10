@@ -1,5 +1,11 @@
 import type { RouteLocationRaw } from "vue-router";
 
+export type TopAiring = {
+  currentPagge: number;
+  hasMorePage: boolean;
+  results: Array<AnimeItem>;
+};
+
 export type AvailableAnimeServer = {
   id: number;
   name: string;
@@ -43,7 +49,7 @@ export type AnimeInfo = {
 export type WatchAnimeItem = {
   title: string;
   animeId: string | null;
-  thumbnail: string;
+  image: string;
   episodeId: string;
   episode: string;
   author: string;
@@ -75,7 +81,7 @@ export type AnimeItem = {
   id: string;
   title: string;
   url: string;
-  cover: string;
+  image: string;
   score: string;
   type: string;
   status: string;

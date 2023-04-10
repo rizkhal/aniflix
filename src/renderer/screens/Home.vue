@@ -1,62 +1,56 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { useAnimeLatest, useAnimeOnGoing } from "../stores";
-import MovieCard from "../components/card/MovieCard.vue";
-import MovieWatchCard from "../components/card/MovieWatchCard.vue";
-import MovieCardTitle from "../components/card/MovieCardTitle.vue";
-import MovieCardContainer from "../components/card/MovieCardContainer.vue";
-import FeedCardSkeleton from "../components/skeleton/FeedCardSkeleton.vue";
-import WatchListCardSkeleton from "../components/skeleton/WatchListCardSkeleton.vue";
 import { storeToRefs } from "pinia";
+import { useAnimeTopAiring, useAnimeRecentEpisode } from "../stores";
 
-const latestStore = useAnimeLatest();
-const onGoingStore = useAnimeOnGoing();
+const topAiringStore = useAnimeTopAiring();
+const recentEpisodeStore = useAnimeRecentEpisode();
 
-const { data: latest, loading: latestLoading } = storeToRefs(latestStore);
-const { data: onGoing, loading: onGoingLoading } = storeToRefs(onGoingStore);
+const { loading: topAiringLoading, data: topAirings } =
+  storeToRefs(topAiringStore);
+
+const { loading: recentLoading, data: recents } =
+  storeToRefs(recentEpisodeStore);
 
 onMounted(() => {
-  latestStore.fetch();
-  onGoingStore.fetch();
+  topAiringStore.fetch();
+  recentEpisodeStore.fetch();
 });
 </script>
 <template>
-  <div class="flex flex-col space-y-8">
-    <MovieCardContainer title="Sedang Berlangsung" icon="FireIcon">
-      <FeedCardSkeleton
-        v-if="onGoingLoading"
+  <div class="flex flex-col space-y-4">
+    <v-movie-card-container title="Top Airing" icon="FireIcon">
+      <v-feed-card-skeleton
+        v-if="topAiringLoading"
         v-for="(_, index) in Array.from({ length: 7 })"
         :key="index"
       />
-      <MovieCard
+      <v-movie-card
         v-else
-        v-for="(item, index) in onGoing"
+        v-for="(item, index) in topAirings?.results"
         :key="index.toString()"
         :item="item"
-        @click="
-          $router.push({ name: 'detail', params: { animeId: item.animeId } })
-        "
       />
-    </MovieCardContainer>
+    </v-movie-card-container>
 
     <div class="flex flex-row justify-between items-center">
-      <MovieCardTitle title="Baru Diupload" icon="ClockIcon" />
-      <RouterLink
+      <v-movie-card-title title="Recents" icon="ClockIcon" />
+      <router-link
         to="/latest"
         href="#"
         class="font-body text-primary-600 text-sm"
-        >Lihat Semua</RouterLink
+        >View All</router-link
       >
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-      <WatchListCardSkeleton
-        v-if="latestLoading"
+      <v-watch-list-card-skeleton
+        v-if="recentLoading"
         v-for="(i, index) in Array.from({ length: 6 })"
-        :key="index * 2"
+        :key="(index * 2).toString()"
       />
-      <MovieWatchCard
+      <v-movie-watch-card
         v-else
-        v-for="(item, index) in latest.slice(0, 6)"
+        v-for="(item, index) in recents?.results.slice(0, 6)"
         :key="index.toString()"
         :item="item"
       />

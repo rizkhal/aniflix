@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="VMovieCardContainer">
 import { ref } from "vue";
 import MovieCardTitle from "./MovieCardTitle.vue";
 

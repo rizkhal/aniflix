@@ -1,3 +1,6 @@
+<script setup lang="ts" name="VMovieCardSkeleton">
+//
+</script>
 <template>
   <div class="relative w-1/2 rounded-lg overflow-hidden">
     <svg
