@@ -46,6 +46,7 @@
     "vite-plugin-vue-setup-extend": "^0.4.0",
     "vue": "^3.2.47",
     "vue-router": "4",
+    "vue-tippy": "v6",
     "vue3-toastify": "^0.1.6",
     "wretch": "^2.5.1"
   }

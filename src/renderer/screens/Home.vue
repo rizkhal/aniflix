@@ -48,7 +48,7 @@ onMounted(() => {
         v-for="(i, index) in Array.from({ length: 6 })"
         :key="(index * 2).toString()"
       />
-      <v-movie-watch-card
+      <v-recent-card
         v-else
         v-for="(item, index) in recents?.results.slice(0, 6)"
         :key="index.toString()"

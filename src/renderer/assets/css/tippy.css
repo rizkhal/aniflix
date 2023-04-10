@@ -1,0 +1,22 @@
+.tippy-box[data-theme~="aniflix"] {
+    background-color: #64748b;
+    font-weight: 600;
+}
+.tippy-box[data-theme~="aniflix"][data-placement^="top"] > .tippy-arrow:before {
+    border-top-color: #64748b;
+}
+.tippy-box[data-theme~="aniflix"][data-placement^="bottom"] > .tippy-arrow:before {
+    border-bottom-color: #64748b;
+}
+.tippy-box[data-theme~="aniflix"][data-placement^="left"] > .tippy-arrow:before {
+    border-left-color: #64748b;
+}
+.tippy-box[data-theme~="aniflix"][data-placement^="right"] > .tippy-arrow:before {
+    border-right-color: #64748b;
+}
+.tippy-box[data-theme~="aniflix"] > .tippy-backdrop {
+    background-color: #64748b;
+}
+.tippy-box[data-theme~="aniflix"] > .tippy-svg-arrow {
+    fill: #64748b;
+}
