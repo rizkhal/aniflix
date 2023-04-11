@@ -31,7 +31,7 @@ const toRight = () => {
     <div class="flex items-center space-x-2 fill-gray-500">
       <button @click="toLeft" class="cursor-pointer">
         <svg
-          class="h-7 w-7 rounded-md border p-1 hover:border-primary-600 hover:fill-primary-600"
+          class="h-7 w-7 rounded-md border dark:border-slate-900 p-1 hover:border-primary-600 hover:fill-primary-600"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
@@ -42,7 +42,7 @@ const toRight = () => {
       </button>
       <button @click="toRight" class="cursor-pointer">
         <svg
-          class="h-7 w-7 rounded-md border p-1 hover:border-primary-600 hover:fill-primary-600"
+          class="h-7 w-7 rounded-md border dark:border-slate-900 p-1 hover:border-primary-600 hover:fill-primary-600"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
@@ -54,8 +54,8 @@ const toRight = () => {
     </div>
   </div>
 
-  <div  ref="containerRef" class="relative overflow-auto mt-4 hide-scroll-bar">
-    <div class="w-full bg-gray-100 shadow-xl min-w-0">
+  <div ref="containerRef" class="relative overflow-auto mt-4 hide-scroll-bar">
+    <div class="w-full bg-slate-100 dark:bg-slate-800 shadow-xl min-w-0">
       <div class="inline-flex space-x-4">
         <slot />
       </div>

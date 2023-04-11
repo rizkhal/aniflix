@@ -1,33 +1,40 @@
 <script setup lang="ts">
 import { onMounted, reactive } from "vue";
-import { useProvider } from "../stores";
+import { useSetting, themes } from "../stores/useSetting";
 import { storeToRefs } from "pinia";
 import { toast } from "vue3-toastify";
+import { ucfirst } from "../utils";
 
-const providerStore = useProvider();
-const { provider, workingProviders } = storeToRefs(providerStore);
+const setting = useSetting();
+const { theme, provider, providers } = storeToRefs(setting);
 
 const model = reactive({
+  theme: theme.value,
   provider: provider.value,
 });
 
 onMounted(() => {
-  providerStore.fetch();
+  setting.fetchProviders();
 });
 
 const save = () => {
-  providerStore.set(model.provider);
+  setting.update(model);
+
   toast("Setting updated", {
-    theme: "auto",
+    theme: "colored",
   });
 };
 </script>
 <template>
   <div class="mt-4">
-    <div class="flex flex-col md:flex-row border-b border-gray-200 pb-4 mb-4">
-      <div class="w-1/3 mx-2 mt-1 text-slate-700">
-        <span class="font-body">Provider</span>
-        <div class="text-xs leading-relaxed text-gray-500 mt-1 font-light">
+    <div
+      class="flex flex-col md:flex-row border-b border-gray-200 dark:border-slate-900 pb-4"
+    >
+      <div class="w-1/3 mx-2 text-slate-700">
+        <span class="font-body dark:text-primary-600">Provider</span>
+        <div
+          class="text-xs leading-relaxed text-gray-500 font-light dark:text-slate-200"
+        >
           Provider is anime site you want to watch, we will provide anime where
           the provider you select
         </div>
@@ -36,10 +43,10 @@ const save = () => {
         <div class="w-full flex-1 mx-2">
           <select
             v-model="model.provider"
-            class="w-full p-2 rounded bg-white shadow-sm border"
+            class="w-full p-2 rounded bg-white shadow-sm border dark:bg-slate-700 dark:border-slate-900 focus:outline-none dark:text-slate-200"
           >
             <option
-              v-for="(item, index) in workingProviders"
+              v-for="(item, index) in providers"
               :key="index.toString()"
               :value="item.name"
             >
@@ -50,23 +57,36 @@ const save = () => {
       </div>
     </div>
 
-    <div class="flex flex-col md:flex-row border-b border-gray-200 pb-4 mb-4">
-      <div class="w-1/3 mx-2 mt-1 text-slate-700">
-        <span class="font-body">Theme</span>
-        <div class="text-xs leading-relaxed text-gray-500 mt-1 font-light">
+    <div
+      class="flex flex-col md:flex-row border-b border-gray-200 dark:border-slate-900 py-4"
+    >
+      <div class="w-1/3 mx-2 text-slate-700">
+        <span class="font-body dark:text-primary-600">Theme</span>
+        <div
+          class="text-xs leading-relaxed text-gray-500 font-light dark:text-slate-200"
+        >
           Change theme you want
         </div>
       </div>
       <div class="flex-1 flex flex-col md:flex-row sm:mt-2 md:items-center">
         <div class="w-full flex-1 mx-2">
-          <select class="w-full p-2 rounded bg-white shadow-sm border">
-            <option>Default</option>
+          <select
+            v-model="model.theme"
+            class="w-full p-2 rounded bg-white shadow-sm border dark:bg-slate-700 dark:border-slate-900 focus:outline-none dark:text-slate-200"
+          >
+            <option
+              v-for="(theme, index) in themes"
+              :value="theme"
+              :key="index"
+            >
+              {{ ucfirst(theme) }}
+            </option>
           </select>
         </div>
       </div>
     </div>
 
-    <div class="flex flex-col md:flex-row">
+    <div class="flex flex-col md:flex-row mt-4">
       <div
         class="md:block hidden w-72 mx-2 font-bold h-6 mt-3 text-gray-800"
       ></div>
@@ -77,7 +97,7 @@ const save = () => {
           @click="save"
           class="bg-primary-600 py-1 px-4 text-xs rounded-md text-primary-100"
         >
-          Simpan
+          Submit
         </button>
       </div>
     </div>

@@ -1,14 +1,15 @@
 <script setup lang="ts" name="VRecentCard">
-import { ref } from "vue";
 import { useAnimeInfo } from "../../stores";
-import type { WatchAnimeItem } from "../../typings/index";
 import { storeToRefs } from "pinia";
 import "../../assets/css/tippy.css";
-import { IAnimeInfo } from "@consumet/extensions";
+import { IAnimeResult } from "@consumet/extensions";
 import Icon from "../Icon.vue";
+import { AnimeItem } from "../../typings/index";
+
+type ApiResponse = IAnimeResult & AnimeItem;
 
 const props = defineProps<{
-  item: IAnimeInfo;
+  item: ApiResponse;
 }>();
 
 const store = useAnimeInfo();
@@ -28,7 +29,7 @@ const onStateChange = (event: any) => {
   <v-tippy
     interactive
     theme="aniflix"
-    placement="right"
+    placement="left"
     inlinePositioning
     :offset="[0, -80]"
     class="relative w-full lg:flex"
@@ -36,12 +37,14 @@ const onStateChange = (event: any) => {
   >
     <div
       :style="{ backgroundImage: `url(${item.image})` }"
-      class="h-full border border-r-none lg:w-48 w-full flex-none text-center overflow-hidden bg-center rounded-bl-none rounded-br-none rounded-t lg:rounded-l lg:rounded-tr-none shadow"
+      class="h-full lg:w-48 border border-r-0 dark:border-slate-900 w-full flex-none text-center overflow-hidden bg-center rounded-bl-none rounded-br-none rounded-t lg:rounded-l lg:rounded-tr-none shadow"
     ></div>
     <div
-      class="w-full h-32 border border-l-none bg-white shadow p-2 flex flex-col justify-between leading-normal rounded-r-none md:rounded-r"
+      class="w-full h-32 border border-l-none bg-white dark:bg-slate-700 dark:border-slate-900 shadow p-2 flex flex-col justify-between leading-normal rounded-r-none md:rounded-r"
     >
-      <span class="text-slate-600 font-bold text-md text-xs mb-2">
+      <span
+        class="text-slate-600 font-bold text-md text-xs mb-2 leading-relaxed dark:text-slate-200"
+      >
         {{ item.title }}
       </span>
     </div>
@@ -50,9 +53,12 @@ const onStateChange = (event: any) => {
       <div v-if="loading || !data" class="w-full h-full bg-slate-500 p-2">
         Loading..
       </div>
-      <div v-else class="w-72 h-72 bg-slate-500 p-2">
-        <h1 class="text-slate-50 font-body mb-2">{{ data.title }}</h1>
+      <div
+        v-else
+        class="w-72 h-72 flex flex-col justify-between bg-slate-500 p-2"
+      >
         <div class="flex flex-col space-y-2">
+          <h1 class="text-slate-50 font-body">{{ data.title }}</h1>
           <div class="flex flex-row justify-between">
             <div class="inline-flex items-center">
               <div class="inline-flex items-center space-x-1">
@@ -66,14 +72,30 @@ const onStateChange = (event: any) => {
               <span class="ml-2">Ep: {{ data.totalEpisodes }}</span>
             </div>
             <div>
-              <span class="py-1 px-2 bg-slate-300 text-slate-700 rounded-md">{{
-                data.type
-              }}</span>
+              <span class="py-1 px-2 bg-slate-300 text-slate-700 rounded-md">
+                {{ data.type }}
+              </span>
             </div>
           </div>
           <div>
             <p>{{ data.description?.substring(0, 100) }} ...</p>
           </div>
+        </div>
+        <div class="w-full">
+          <button
+            @click="
+              $router.push({
+                name: 'watch',
+                params: {
+                  animeId: data.id,
+                  episodeId: item.episodeId,
+                },
+              })
+            "
+            class="w-full p-3 rounded bg-slate-400 hover:bg-slate-600 transition-all"
+          >
+            Watch
+          </button>
         </div>
       </div>
     </template>

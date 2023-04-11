@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
-import { useAnimeProvider, IAnimeResult, ISearch } from "./useAnimeProvider";
-import { IAnimeInfo } from "@consumet/extensions";
+import { useAnimeProvider, IAnimeInfo } from "./useAnimeProvider";
 
 interface EpisodeState {
   loading: boolean;
@@ -26,7 +25,6 @@ export const useAnimeInfo = defineStore("useAnimeInfo", {
         .then((response) => {
           this.data = response;
           console.log(response);
-          
         })
         .finally(() => {
           this.loading = false;

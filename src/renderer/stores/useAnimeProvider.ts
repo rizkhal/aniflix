@@ -1,7 +1,14 @@
 import { Ref } from "vue";
 import { defineStore } from "pinia";
 import { useLocalStorage } from "@vueuse/core";
-import { ISearch, IAnimeResult, ANIME, IAnimeInfo } from "@consumet/extensions";
+import {
+  ISearch,
+  IAnimeResult,
+  ANIME,
+  IAnimeInfo,
+  ISource,
+  StreamingServers,
+} from "@consumet/extensions";
 
 const InitialProvider = "Gogoanime";
 
@@ -9,6 +16,10 @@ interface AnimeProvider {
   fetchTopAiring: () => Promise<ISearch<IAnimeResult>>;
   fetchRecentEpisodes: () => Promise<ISearch<IAnimeResult>>;
   fetchAnimeInfo: (id: string) => Promise<IAnimeInfo>;
+  fetchEpisodeSources: (
+    episodeId: string,
+    server?: StreamingServers
+  ) => Promise<ISource>;
 }
 
 type ProviderType = "Gogoanime" | "Zoro";
@@ -43,4 +54,4 @@ const useAnimeProvider = defineStore("useAnimeProvider", {
   },
 });
 
-export { ISearch, IAnimeResult, useAnimeProvider };
+export { ISearch, ISource, IAnimeInfo, IAnimeResult, useAnimeProvider };

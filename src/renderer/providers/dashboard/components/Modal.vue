@@ -135,7 +135,7 @@ watch(
           >
             <DialogPanel
               :class="maxWidthClass"
-              class="w-full transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all"
+              class="w-full transform overflow-hidden rounded-lg bg-white dark:bg-slate-700 text-left align-middle shadow-xl transition-all"
             >
               <div ref="bodyRef">
                 <!-- rendered using JSX -->

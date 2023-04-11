@@ -6,7 +6,7 @@ const toggleSidebar = () => {};
 <template>
   <div class="sticky top-0 z-40">
     <div
-      class="w-full h-20 px-6 bg-gray-100 border-b flex items-center justify-between"
+      class="w-full h-20 px-6 bg-gray-100 dark:bg-slate-800 dark:border-slate-900 border-b flex items-center justify-between"
     >
       <!-- left navbar -->
       <div class="flex">

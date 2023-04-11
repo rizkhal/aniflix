@@ -5,7 +5,7 @@ import Logo from "../assets/img/aniflix.svg";
   <div class="font-bold text-lg flex items-center gap-x-2">
     <Logo class="fill-primary-600 w-10 h-10" />
     <div class="tracking-wide">
-      <h1 class="inline-block">AniFlix</h1>
+      <h1 class="inline-block dark:text-slate-200">AniFlix</h1>
       <span class="text-primary-600">.</span>
     </div>
   </div>

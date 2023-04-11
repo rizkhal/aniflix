@@ -1832,6 +1832,11 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
+hls.js@1.4.0-rc.1.0.canary.9042:
+  version "1.4.0-rc.1.0.canary.9042"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.4.0-rc.1.0.canary.9042.tgz#210ba7a47ec1c0a94549c902ea866e34247899f8"
+  integrity sha512-6CxVQZoIkCnti2+rIpFdYn6909UCkGoe9CxFt9NBmccI5xR7k00F7ZlUiM9DfbOoqAQy3j9galeFUNieQmbkxQ==
+
 hosted-git-info@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-4.1.0.tgz#827b82867e9ff1c8d0c4d9d53880397d2c86d224"

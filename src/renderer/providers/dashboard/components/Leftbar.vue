@@ -15,15 +15,17 @@ const logout = () => {
   <!-- give the sidebar z-50 class so its higher than the navbar if you want to see the logo -->
   <!-- you will need to add a little "X" button next to the logo in order to close it though -->
   <div
-    class="w-1/2 md:w-1/3 lg:w-64 fixed md:top-0 md:left-0 h-screen lg:block bg-gray-100 border-r z-30"
+    class="w-1/2 md:w-1/3 lg:w-64 fixed md:top-0 md:left-0 h-screen hidden lg:block bg-slate-100 dark:bg-slate-800 dark:border-slate-900 border-r z-30"
     id="main-nav"
   >
-    <div class="w-full h-20 border-b flex px-4 items-center mb-8">
+    <div
+      class="w-full h-20 border-b dark:border-slate-900 dark:bg-slate-800 flex px-4 items-center mb-8"
+    >
       <Logo />
     </div>
 
     <div
-      class="mt-4 pl-4 mb-4 flex flex-col gap-y-4 text-gray-500 fill-gray-500 text-sm"
+      class="mt-4 pl-4 mb-4 flex flex-col gap-y-4 text-gray-500 dark:text-slate-200 fill-gray-500 text-sm"
     >
       <div class="text-gray-400/70 font-medium uppercase font-body">Menu</div>
       <router-link

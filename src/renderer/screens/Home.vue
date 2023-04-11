@@ -42,7 +42,7 @@ onMounted(() => {
         >View All</router-link
       >
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
       <v-watch-list-card-skeleton
         v-if="recentLoading"
         v-for="(i, index) in Array.from({ length: 6 })"
@@ -50,7 +50,7 @@ onMounted(() => {
       />
       <v-recent-card
         v-else
-        v-for="(item, index) in recents?.results.slice(0, 6)"
+        v-for="(item, index) in recents?.results.slice(0, 12)"
         :key="index.toString()"
         :item="item"
       />

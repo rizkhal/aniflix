@@ -85,6 +85,7 @@ export type AnimeItem = {
   score: string;
   type: string;
   status: string;
+  episodeId?: string;
   animeId: string;
 };
 

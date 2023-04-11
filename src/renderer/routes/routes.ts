@@ -40,7 +40,7 @@ const routes = [
   },
   {
     name: "watch",
-    path: "/detail/watch/:episodeId",
+    path: "/detail/:animeId/:episodeId",
     meta: { backButton: true },
     component: () => import("../screens/Watch.vue"),
   },

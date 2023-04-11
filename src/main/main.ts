@@ -1,9 +1,10 @@
 import {
   app,
-  BrowserWindow,
   ipcMain,
-  OnHeadersReceivedListenerDetails,
   session,
+  nativeTheme,
+  BrowserWindow,
+  OnHeadersReceivedListenerDetails,
 } from "electron";
 import { join } from "path";
 import setApplicationMenu from "./menu";
@@ -24,6 +25,27 @@ function createWindow() {
   mainWindow.show();
 
   // setApplicationMenu();
+
+  ipcMain.handle("dark-mode:toggle", () => {
+    if (nativeTheme.shouldUseDarkColors) {
+      nativeTheme.themeSource = "light";
+    } else {
+      nativeTheme.themeSource = "dark";
+    }
+    return nativeTheme.shouldUseDarkColors;
+  });
+
+  ipcMain.handle("dark-mode:system", () => {
+    nativeTheme.themeSource = "system";
+  });
+
+  ipcMain.handle("dark-mode:dark", () => {
+    nativeTheme.themeSource = "dark";
+  });
+
+  ipcMain.handle("dark-mode:light", () => {
+    nativeTheme.themeSource = "light";
+  });
 
   if (process.env.NODE_ENV === "development") {
     const rendererPort = process.argv[2];

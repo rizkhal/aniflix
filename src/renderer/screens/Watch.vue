@@ -1,107 +1,57 @@
 <script setup lang="ts">
+import { ref, onMounted, watchEffect } from "vue";
+import { RouteParams, useRoute } from "vue-router";
+import { useEpisodeSource } from "../stores";
 import { storeToRefs } from "pinia";
-import { ref, reactive, onMounted, watch } from "vue";
-import { useAnimeInfo, useServer, useWatchAnime } from "../stores";
-import { useRoute, RouteLocationNormalizedLoaded } from "vue-router";
-import type { VideoStreamingSource, AvailableAnimeServer } from "../typings";
-import VideoLoading from "../components/skeleton/VideoLoadingSkeleton.vue";
-import VideoDetailLoadingSkeleton from "../components/skeleton/VideoDetailLoadingSkeleton.vue";
-import EpisodeLists from "../components/card/EpisodeLists.vue";
+import Plyr from "plyr";
+import "plyr/dist/plyr.css";
+import hlsjs from "hls.js";
 
-const servers = ref<AvailableAnimeServer[]>([]);
-const infoAnimeStore = useAnimeInfo();
-const watchAnimeStore = useWatchAnime();
-const route: RouteLocationNormalizedLoaded = useRoute();
+const route = useRoute();
+const store = useEpisodeSource();
+const { loading, data, sources } = storeToRefs(store);
 
-const { episodeId } = route.params;
-const { animeId, info, loading: infoLoading } = storeToRefs(infoAnimeStore);
-const { videosMP4, loading, filteredAvaillableServer } =
-  storeToRefs(watchAnimeStore);
+const { animeId, episodeId } = route.params;
 
-const sources: VideoStreamingSource = reactive({
-  src: undefined,
-  type: "video/webm",
-  server: undefined,
+const video = ref();
+const hls = new hlsjs();
+
+onMounted(() => {
+  store.fetch(episodeId);
 });
 
-interface ApiResponse {
-  data: AvailableAnimeServer[];
-}
+watchEffect(() => {
+  const defaultOptions = {};
 
-onMounted(async () => {
-  const { data }: ApiResponse = await useServer().fetch();
-  servers.value = data;
-  sources.server = data[0].name;
-  watchAnimeStore.fetch(episodeId, sources.server);
-});
+  if (!loading.value && sources.value?.length && hlsjs.isSupported()) {
+    const ee = sources.value.filter(i => i.quality === 360)[0];
+    hls.loadSource(ee.url);
 
-watch(
-  () => videosMP4.value,
-  (val) => {
-    if (val.length) {
-      sources.src = val[0].url;
-    }
+    hls.on(hlsjs.Events.MANIFEST_PARSED, function (event, data) {
+      // Add new qualities to option
+      defaultOptions.quality = {
+        default: ee.quality,
+        options: [360, 480, 720, 1080],
+        // this ensures Plyr to use Hls to update quality level
+        forced: true,
+        onChange: (e) => {
+          const anu = sources.value.filter((item) => item.quality === e)[0];
+          hls.loadSource(anu.url);
+        },
+      };
+
+      // Initialize here
+      const player = new Plyr(video.value, defaultOptions);
+    });
+
+    hls.attachMedia(video.value);
+  } else {
+    console.log("unsuported!");
   }
-);
-
-watch(
-  () => sources.server,
-  (val) => watchAnimeStore.fetch(episodeId, val)
-);
+});
 </script>
 <template>
   <div>
-    {{ sources }}
-
-    <VideoLoading v-if="loading" />
-    <VideoPlayer
-      v-else
-      class="video-player vjs-big-play-centered w-full h-[600px] rounded-md"
-      crossorigin="anonymous"
-      playsinline
-      controls
-      :height="720"
-      :playback-rates="[0.7, 1.0, 1.5, 2.0]"
-      :sources="[sources]"
-    />
-
-    <VideoDetailLoadingSkeleton v-if="loading || infoLoading" />
-    <div v-else class="flex flex-row justify-between space-x-4 mt-4">
-      <div>
-        <RouterLink
-          :to="{ name: 'detail', params: { animeId: animeId } }"
-          class="text-2xl font-body text-primary-600"
-          >{{ info?.title }}</RouterLink
-        >
-      </div>
-      <div>
-        <div class="inline-flex space-x-2">
-          <select v-model="sources.server" class="p-2 bg-white shadow">
-            <option
-              v-for="(server, index) in filteredAvaillableServer"
-              :key="index.toString()"
-              :value="server"
-            >
-              {{ server }}
-            </option>
-          </select>
-          <select v-model="sources.src" class="p-2 bg-white shadow">
-            <option
-              v-for="(video, index) in videosMP4"
-              :key="index.toString()"
-              :value="video.url"
-            >
-              {{ video.resolution }}
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="mt-8">
-      <div v-if="!loading && !infoLoading">
-        <h1 class="mb-3 font-body">Daftar Episode {{ info?.title }}</h1>
-        <EpisodeLists v-if="info" :episodes="info.episodes" />
-      </div>
-    </div>
+    <video ref="video" controls playsinline class="w-full" />
   </div>
 </template>
