@@ -1,15 +1,22 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { debounce } from "../../../utils";
 import { storeToRefs } from "pinia";
 import { useSearch } from "../../../stores/useSearch";
-import LoadingSpinner from "../../../components/LoadingSpinner.vue";
-import Icon from "../../../components/Icon.vue";
+import { getInstance } from "../../../hooks/useInstance";
 
 const store = useSearch();
+const focusRef = ref();
 const search = ref<string | null>();
 
 const { loading, data } = storeToRefs(store);
+
+onMounted(() => {
+  const modal = getInstance("searchModal");
+  setTimeout(() => {
+    modal.initialFocusRef.value = focusRef.value;
+  });
+});
 
 watch(
   () => search.value,
@@ -46,13 +53,14 @@ watch(
       <input
         autofocus
         type="text"
+        ref="focusRef"
         v-model="search"
         placeholder="Search..."
         class="w-full py-4 pl-12 outline-none dark:bg-slate-700 placeholder-gray-400 dark:placeholder-slate-400 dark:text-slate-200"
       />
 
       <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-        <LoadingSpinner v-if="loading" class="text-slate-500" />
+        <v-loading-spinner v-if="loading" class="text-slate-500" />
         <button
           v-else
           class="flex items-center p-1.5 uppercase font-semibold tracking-wider text-gray-700 dark:text-slate-400 rounded-md border border-gray-200 dark:border-slate-900 focus:outline-none focus:border-gray-300 text-xxs"
@@ -97,7 +105,7 @@ watch(
                 <li>{{ item.type }}</li>
                 <li>{{ item.status }}</li>
                 <li class="inline-flex items-center space-x-1">
-                  <Icon
+                  <v-icon
                     name="StarIcon"
                     type="solid"
                     class="w-4 h-4 fill-yellow-400"

@@ -28,7 +28,7 @@ function createWindow() {
   // setApplicationMenu();
 
   globalShortcut.register("Ctrl+\\", () => {
-    mainWindow.webContents.send("open-sidebar");
+    mainWindow.webContents.send("toggle-sidebar");
   });
 
   ipcMain.handle("dark-mode:toggle", () => {

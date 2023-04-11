@@ -44,7 +44,7 @@ const setting = useSetting();
             class="flex flex-row space-x-2 items-center text-primary-600"
           >
             <v-icon name="ArrowLeftIcon" class="w-6 h-6" />
-            <span class="text-xl font-body">Kembali</span>
+            <span class="text-xl font-body">Back</span>
           </button>
         </div>
         <div v-if="$route.meta.backButton && $route.meta.title">

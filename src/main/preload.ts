@@ -1,12 +1,8 @@
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("sidebar", {
-  toggle: (cb) => ipcRenderer.on("open-sidebar", cb),
+  toggle: (cb) => ipcRenderer.on("toggle-sidebar", cb),
 });
-
-// ipcRenderer.on("open-sidebar", () => {
-//   console.log("dwndwkj");
-// });
 
 contextBridge.exposeInMainWorld("electronAPI", {
   sendMessage: (message: string) => ipcRenderer.send("message", message),

@@ -14,16 +14,12 @@ import {
   Component,
   VNode,
   watch,
-  inject,
-  AppContext,
   getCurrentInstance,
 } from "vue";
 import { RouteLocationNormalizedLoaded, useRoute } from "vue-router";
-import { setInstance } from "../../../hooks/useModal";
+import { removeInstance, setInstance } from "../../../hooks/useInstance";
 
 const route: RouteLocationNormalizedLoaded = useRoute();
-
-const context = inject<AppContext | null>("appContext", null);
 
 type CustomProps = {
   id: string;
@@ -32,14 +28,16 @@ type CustomProps = {
   onBackdropPress: Function;
 };
 
-const props: CustomProps = reactive({
+const initialState = {
   id: "modal",
   position: "top-center",
   maxWidth: "md",
   onBackdropPress: () => {
     closeModal();
   },
-});
+};
+
+const props: CustomProps = reactive({ ...initialState });
 
 const positionClass = computed(() => {
   return {
@@ -62,10 +60,7 @@ const maxWidthClass = computed(() => {
 
 const isOpen: Ref<boolean> = ref(false);
 const bodyRef: Ref<Component | any> = ref();
-
-function closeModal() {
-  isOpen.value = false;
-}
+const initialFocusRef = ref<HTMLElement | undefined>();
 
 type Modal = {
   id: string;
@@ -74,25 +69,42 @@ type Modal = {
 
 const instance = getCurrentInstance();
 
+function resetProps() {
+  for (const [key, value] of Object.entries(initialState)) {
+    props[key] = value;
+  }
+}
+
+// FIXME: make me better
+const i = ref();
+
 function openModal({ id, body }: Modal) {
+  resetProps(); // ensure `resetProps` first
+
   isOpen.value = true;
 
   Object.assign(props, body.props);
 
   // set modal instance
-  setInstance(id, instance?.exposed);
-
-  body.appContext = context;
+  i.value = id;
+  setInstance(id, instance?.exposed ? instance.exposed : null);
+  body.appContext = instance?.appContext ? instance.appContext : null;
 
   setTimeout(() => {
     render(body, bodyRef.value);
   });
 }
 
+function closeModal() {
+  isOpen.value = false;
+  removeInstance(i.value);
+}
+
 defineExpose({
   isOpen,
   openModal,
   closeModal,
+  initialFocusRef,
 });
 
 watch(
@@ -105,7 +117,12 @@ watch(
 </script>
 <template>
   <TransitionRoot appear :show="isOpen" as="template">
-    <Dialog as="div" @close="props.onBackdropPress" class="relative z-50">
+    <Dialog
+      as="div"
+      :initial-focus="initialFocusRef"
+      @close="props.onBackdropPress"
+      class="relative z-50"
+    >
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"

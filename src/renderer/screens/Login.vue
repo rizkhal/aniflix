@@ -2,7 +2,7 @@
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import { LoginCredentials } from "../typings";
-import { useAuth, useWelcome } from "../stores";
+import { useAuth } from "../stores";
 import Logo from "../components/Logo.vue";
 import { storeToRefs } from "pinia";
 
@@ -10,7 +10,6 @@ const isDev = import.meta.env.DEV;
 
 const router = useRouter();
 const store = useAuth();
-const welcome = useWelcome();
 const model: LoginCredentials = reactive({
   username: isDev ? "demo" : "",
   password: isDev ? "secret" : "",
@@ -21,7 +20,6 @@ const { loading, errors } = storeToRefs(store);
 const login = () => {
   store.login(model).then(() => {
     loading.value = false;
-    welcome.show(true);
     router.push("home");
   });
 };
@@ -50,7 +48,7 @@ const login = () => {
         </div>
         <form
           @submit="login"
-          class="lg:w-1/3 md:w-1/2 bg-gray-50 p-8 flex flex-col lg:ml-auto mt-10 lg:mt-0 rounded-md"
+          class="lg:w-1/3 md:w-1/2 dark:bg-slate-900 bg-gray-50 p-8 flex flex-col lg:ml-auto mt-10 lg:mt-0 rounded-md"
         >
           <div class="flex w-full justify-center mb-8">
             <Logo />
@@ -80,23 +78,27 @@ const login = () => {
           </div>
 
           <div class="relative mb-4">
-            <label for="full-name" class="leading-7 text-sm text-gray-600"
+            <label
+              for="full-name"
+              class="leading-7 text-sm text-gray-600 dark:text-slate-200 font-body"
               >Username</label
             >
             <input
               type="text"
               v-model="model.username"
-              class="w-full bg-white rounded-md border border-gray-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-200 text-sm outline-none text-gray-900 py-1 px-3 leading-8 transition-colors duration-150 ease-in-out"
+              class="w-full bg-white dark:bg-slate-700 focus:ring-none dark:text-slate-200 dark:border-slate-900 rounded-md border border-gray-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-200 text-sm outline-none text-gray-900 py-1 px-3 leading-8 transition-colors duration-150 ease-in-out"
             />
           </div>
           <div class="relative mb-4">
-            <label for="email" class="leading-7 text-sm text-gray-600"
+            <label
+              for="email"
+              class="leading-7 text-sm text-gray-600 dark:text-slate-200 font-body"
               >Password</label
             >
             <input
               type="password"
               v-model="model.password"
-              class="w-full bg-white rounded-md border border-gray-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-200 text-sm outline-none text-gray-900 py-1 px-3 leading-8 transition-colors duration-150 ease-in-out"
+              class="w-full bg-white dark:bg-slate-700 focus:ring-none dark:text-slate-200 dark:border-slate-900 rounded-md border border-gray-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-200 text-sm outline-none text-gray-900 py-1 px-3 leading-8 transition-colors duration-150 ease-in-out"
             />
           </div>
           <button
@@ -105,10 +107,10 @@ const login = () => {
             class="disabled:bg-primary-400 disabled:cursor-not-allowed text-white bg-primary-500 rounded-md border-0 py-2 px-8 focus:outline-none hover:bg-primary-600 text-lg"
           >
             <span v-show="loading">Loading..</span>
-            <span v-show="!loading">Login</span>
+            <span v-show="!loading" class="font-body">Login</span>
           </button>
           <div class="flex flex-col items-center justify-center mt-4">
-            <span class="font-body text-slate-700">Or</span>
+            <span class="font-body text-slate-700 dark:text-slate-300">Or</span>
             <RouterLink
               :to="{ name: 'home' }"
               class="text-primary-500 font-body flex justify-center mt-1"

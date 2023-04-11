@@ -3,14 +3,12 @@ import Modal from "./components/Modal.vue";
 import Navbar from "./components/Navbar.vue";
 import Leftbar from "./components/Leftbar.vue";
 import { useSetting } from "../../stores";
-import { ref, provide, Ref, getCurrentInstance, onMounted } from "vue";
+import { ref, provide, Ref, onMounted } from "vue";
 
 const setting = useSetting();
 const modalRef: Ref<undefined> = ref();
-const instance = getCurrentInstance();
 
 provide("modalRef", modalRef);
-provide("appContext", instance ? instance.appContext : null);
 
 onMounted(() => {
   setting.initializeShortcut();

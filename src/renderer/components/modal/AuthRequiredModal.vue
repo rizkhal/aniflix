@@ -1,8 +1,15 @@
 <script setup lang="ts" name="VAuthRequiredModal">
-import { onMounted } from "vue";
-import { getInstance } from "../../hooks/useModal";
+import { ref, onMounted } from "vue";
+import { getInstance } from "../../hooks/useInstance";
 
+const focusRef = ref<undefined>();
 const modal = getInstance("authRequiredModal");
+
+onMounted(() => {
+  setTimeout(() => {
+    modal.initialFocusRef.value = focusRef.value;
+  });
+});
 </script>
 <template>
   <div>
@@ -35,7 +42,7 @@ const modal = getInstance("authRequiredModal");
           </h3>
           <div class="mt-2">
             <p class="text-sm text-gray-500 dark:text-slate-400">
-              You need to authenticated before continue, please create your
+              You need to authenticated before continue, register your
               account first
             </p>
           </div>
@@ -47,11 +54,12 @@ const modal = getInstance("authRequiredModal");
     >
       <button
         type="button"
-        class="inline-flex w-full justify-center rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+        class="inline-flex focus:bg-red-500 w-full justify-center rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
       >
         Register
       </button>
       <button
+        ref="focusRef"
         @click="modal.closeModal()"
         type="button"
         class="mt-3 inline-flex w-full justify-center rounded-md bg-white dark:bg-slate-700 dark:ring-slate-900 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 sm:mt-0 sm:w-auto dark:text-slate-200"

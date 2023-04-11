@@ -1,11 +1,12 @@
 <script setup lang="ts" name="VRecentCard">
 import { useAnimeInfo } from "../../stores";
 import { storeToRefs } from "pinia";
-import "../../assets/css/tippy.css";
 import { IAnimeResult } from "@consumet/extensions";
 import Icon from "../Icon.vue";
 import { AnimeItem } from "../../typings/index";
 import { wait } from "../../utils";
+
+import "../../assets/css/tippy.css";
 
 type ApiResponse = IAnimeResult & AnimeItem;
 

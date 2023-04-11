@@ -1,3 +1,11 @@
+import {
+  IAnimeInfo,
+  IAnimeResult,
+  ISearch,
+  ISource,
+  StreamingServers,
+} from "@consumet/extensions";
+import { Ref } from "vue";
 import type { RouteLocationRaw } from "vue-router";
 
 export type TopAiring = {
@@ -65,6 +73,29 @@ export type Provider = {
   id: string;
   name: string;
 };
+
+export { ISearch, ISource, IAnimeInfo, IAnimeResult };
+
+export type ProviderType = "Gogoanime" | "Zoro";
+
+export interface ProviderState {
+  provider: Promise<AnimeProvider>;
+}
+
+export type ProviderRef<T extends ProviderType> = Omit<Ref<T>, "value"> & {
+  get value(): T;
+  set value(value: T | ProviderType);
+};
+
+export interface AnimeProvider {
+  fetchTopAiring: () => Promise<ISearch<IAnimeResult>>;
+  fetchRecentEpisodes: () => Promise<ISearch<IAnimeResult>>;
+  fetchAnimeInfo: (id: string) => Promise<IAnimeInfo>;
+  fetchEpisodeSources: (
+    episodeId: string,
+    server?: StreamingServers
+  ) => Promise<ISource>;
+}
 
 export type ProviderFormated = {
   value: string;

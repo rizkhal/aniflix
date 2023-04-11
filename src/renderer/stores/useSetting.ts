@@ -58,23 +58,24 @@ export const useSetting = defineStore("useSetting", {
     toggleSidebar() {
       this.sidebar = !this.sidebar;
     },
-    async initializeShortcut() {
-      await window.sidebar.toggle(() => {
+    initializeShortcut() {
+      // FIXME: not working on first render
+      window.sidebar.toggle(() => {
         this.$state.sidebar = !this.$state.sidebar;
       });
     },
-    async update(state: UpdateModel) {
+    update(state: UpdateModel) {
       Object.assign(this.$state, state);
 
       switch (state.theme) {
         case "system":
-          await window.darkMode.system();
+          window.darkMode.system();
           break;
         case "dark":
-          await window.darkMode.dark();
+          window.darkMode.dark();
           break;
         case "light":
-          await window.darkMode.light();
+          window.darkMode.light();
           break;
       }
     },

@@ -12,7 +12,7 @@ const routes = [
     name: "home",
     path: "/home",
     meta: {
-      title: "Beranda",
+      title: "Home",
     },
     component: () => import("../screens/Home.vue"),
   },
@@ -20,7 +20,7 @@ const routes = [
     name: "latest",
     path: "/latest/:page?",
     meta: {
-      title: "Semua Anime Baru Diupload",
+      title: "Recents",
       backButton: true,
     },
     component: () => import("../screens/Latest.vue"),
@@ -48,7 +48,7 @@ const routes = [
     name: "bookmark",
     path: "/bookmark",
     meta: {
-      title: "Favorit",
+      title: "Watch List",
     },
     component: () => import("../screens/Bookmark.vue"),
   },
@@ -56,7 +56,7 @@ const routes = [
     name: "setting",
     path: "/setting",
     meta: {
-      title: "Pengaturan",
+      title: "Setting",
       rightBar: false,
     },
     component: () => import("../screens/Setting.vue"),
