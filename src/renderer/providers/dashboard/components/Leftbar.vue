@@ -3,12 +3,32 @@ import { menus, generals } from "../menus";
 import Icon from "../../../components/Icon.vue";
 import Logo from "../../../components/Logo.vue";
 import { useRouter } from "vue-router";
+import { MenuItem } from "../../../typings";
+import AuthRequiredModal from "../../../components/modal/AuthRequiredModal.vue";
+import { authRequiredRoutes } from "../../../routes";
+import { Ref, h, inject } from "vue";
 
 const router = useRouter();
+const modal: any = inject<Ref>("modalRef");
 
 const logout = () => {
   localStorage.clear();
   router.push({ name: "login" });
+};
+
+const navigate = ({ route }: MenuItem) => {
+  if (authRequiredRoutes.includes(route)) {
+    modal.value.openModal({
+      id: "authRequiredModal",
+      body: h(AuthRequiredModal, {
+        position: "center",
+      }),
+    });
+  } else {
+    router.push({
+      path: route,
+    });
+  }
 };
 </script>
 <template>
@@ -28,15 +48,16 @@ const logout = () => {
       class="mt-4 pl-4 mb-4 flex flex-col gap-y-4 text-gray-500 dark:text-slate-200 fill-gray-500 text-sm"
     >
       <div class="text-gray-400/70 font-medium uppercase font-body">Menu</div>
-      <router-link
+      <button
         v-for="(menu, index) in menus"
         :key="index.toString()"
+        :class="{ 'router-link-active': $route.path === menu.route }"
         class="flex items-center space-x-2 py-1 group hover:border-r-4 hover:border-r-primary-600 hover:font-semibold"
-        :to="menu.route"
+        @click="navigate(menu)"
       >
         <Icon :name="menu.icon" class="w-5 h-5" />
         <span class="font-body text-sm">{{ menu.label }}</span>
-      </router-link>
+      </button>
 
       <div class="mt-8 text-gray-400/70 font-medium uppercase font-body">
         General

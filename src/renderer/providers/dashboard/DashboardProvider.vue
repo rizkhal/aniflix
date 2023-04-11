@@ -2,24 +2,32 @@
 import Modal from "./components/Modal.vue";
 import Navbar from "./components/Navbar.vue";
 import Leftbar from "./components/Leftbar.vue";
-import { ref, provide, Ref, getCurrentInstance } from "vue";
-import { RouteLocationNormalizedLoaded, useRoute } from "vue-router";
+import { useSetting } from "../../stores";
+import { ref, provide, Ref, getCurrentInstance, onMounted } from "vue";
 
+const setting = useSetting();
 const modalRef: Ref<undefined> = ref();
 const instance = getCurrentInstance();
-const route: RouteLocationNormalizedLoaded = useRoute();
 
 provide("modalRef", modalRef);
 provide("appContext", instance ? instance.appContext : null);
+
+onMounted(() => {
+  setting.initializeShortcut();
+});
 </script>
 <template>
   <div class="flex min-h-screen bg-slate-100 dark:bg-slate-800 w-full">
     <Modal ref="modalRef" />
 
     <div class="flex flex-wrap w-full">
-      <Leftbar />
+      <Leftbar v-show="setting.sidebar" />
 
-      <div class="w-full pl-0 lg:pl-64 min-h-screen" id="main-content">
+      <div
+        :class="{ 'lg:pl-64': setting.sidebar }"
+        class="w-full pl-0 min-h-screen"
+        id="main-content"
+      >
         <Navbar />
 
         <div class="p-6 mb-20">

@@ -28,7 +28,7 @@ watch(
         class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
       >
         <svg
-          class="w-5 h-5 text-gray-700 dark:text-slate-800"
+          class="w-5 h-5 text-gray-700 dark:text-slate-400"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -48,14 +48,14 @@ watch(
         type="text"
         v-model="search"
         placeholder="Search..."
-        class="w-full py-4 pl-12 outline-none dark:bg-slate-700 placeholder-gray-400 dark:placeholder-slate-800 dark:text-slate-200"
+        class="w-full py-4 pl-12 outline-none dark:bg-slate-700 placeholder-gray-400 dark:placeholder-slate-400 dark:text-slate-200"
       />
 
       <div class="absolute inset-y-0 right-0 flex items-center pr-3">
         <LoadingSpinner v-if="loading" class="text-slate-500" />
         <button
           v-else
-          class="flex items-center p-1.5 uppercase font-semibold tracking-wider text-gray-700 dark:text-slate-900 rounded-md border border-gray-200 dark:border-slate-900 focus:outline-none focus:border-gray-300 text-xxs"
+          class="flex items-center p-1.5 uppercase font-semibold tracking-wider text-gray-700 dark:text-slate-400 rounded-md border border-gray-200 dark:border-slate-900 focus:outline-none focus:border-gray-300 text-xxs"
           type="button"
         >
           Esc

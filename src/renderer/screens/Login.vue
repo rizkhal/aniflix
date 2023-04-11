@@ -111,8 +111,8 @@ const login = () => {
             <span class="font-body text-slate-700">Or</span>
             <RouterLink
               :to="{ name: 'home' }"
-              class="text-primary-500 font-body flex justify-center"
-              >Continue without Account</RouterLink
+              class="text-primary-500 font-body flex justify-center mt-1"
+              >Continue as Guest</RouterLink
             >
           </div>
         </form>

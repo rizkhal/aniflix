@@ -5,6 +5,7 @@ import {
   nativeTheme,
   BrowserWindow,
   OnHeadersReceivedListenerDetails,
+  globalShortcut,
 } from "electron";
 import { join } from "path";
 import setApplicationMenu from "./menu";
@@ -25,6 +26,10 @@ function createWindow() {
   mainWindow.show();
 
   // setApplicationMenu();
+
+  globalShortcut.register("Ctrl+\\", () => {
+    mainWindow.webContents.send("open-sidebar");
+  });
 
   ipcMain.handle("dark-mode:toggle", () => {
     if (nativeTheme.shouldUseDarkColors) {
@@ -68,16 +73,18 @@ app.whenReady().then(() => {
       });
     }
   );
+});
 
-  app.on("activate", function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
-  });
+app.on("activate", function () {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  }
 });
 
 app.on("window-all-closed", function () {
   if (process.platform !== "darwin") app.quit();
+});
+
+app.on("will-quit", () => {
+  globalShortcut.unregisterAll();
 });

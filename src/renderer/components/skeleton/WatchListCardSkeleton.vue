@@ -4,7 +4,7 @@
 <template>
   <div
     role="status"
-    class="space-y-8 animate-pulse md:space-y-0 md:space-x-4 md:flex md:items-center border p-4 shadow"
+    class="space-y-8 animate-pulse md:space-y-0 md:space-x-4 md:flex md:items-center border dark:bg-slate-700 rounded-md dark:border-slate-900 p-4 shadow"
   >
     <div
       class="flex items-center justify-center w-full h-32 bg-gray-300 rounded sm:w-56"

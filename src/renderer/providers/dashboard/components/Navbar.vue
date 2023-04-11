@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Icon from "../../../components/Icon.vue";
+import { useSetting } from "../../../stores";
 
-const toggleSidebar = () => {};
+const setting = useSetting();
 </script>
 <template>
   <div class="sticky top-0 z-40">
@@ -11,14 +11,16 @@ const toggleSidebar = () => {};
       <!-- left navbar -->
       <div class="flex">
         <!-- mobile hamburger -->
-        <div class="lg:hidden flex items-center mr-4">
+        <div
+          :class="{ 'lg:hidden': setting.sidebar }"
+          class="flex items-center mr-4"
+        >
           <button
             class="hover:text-blue-500 hover:border-white focus:outline-none navbar-burger"
-            @click="toggleSidebar()"
+            @click="setting.toggleSidebar()"
           >
             <svg
-              class="h-5 w-5"
-              v-bind:style="{ fill: 'black' }"
+              class="h-5 w-5 fill-primary-600"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -41,7 +43,7 @@ const toggleSidebar = () => {};
             @click="$router.go(-1)"
             class="flex flex-row space-x-2 items-center text-primary-600"
           >
-            <Icon name="ArrowLeftIcon" class="w-6 h-6" />
+            <v-icon name="ArrowLeftIcon" class="w-6 h-6" />
             <span class="text-xl font-body">Kembali</span>
           </button>
         </div>
@@ -50,7 +52,7 @@ const toggleSidebar = () => {};
             @click="$router.go(-1)"
             class="flex flex-row space-x-2 items-center text-primary-600"
           >
-            <Icon name="ArrowLeftIcon" class="w-6 h-6" />
+            <v-icon name="ArrowLeftIcon" class="w-6 h-6" />
             <span class="text-xl font-body">{{ $route.meta.title }}</span>
           </button>
         </div>

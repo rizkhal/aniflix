@@ -1,10 +1,10 @@
-import { MenuItem } from "../../typings";
+import { MenuItemList } from "../../typings";
 
-export const menus: MenuItem = [
-  { label: "Beranda", icon: "HomeIcon", route: "/home" },
-  // { label: "Favorit", icon: "HeartIcon", route: "/bookmark" },
+export const menus: MenuItemList = [
+  { label: "Home", icon: "HomeIcon", route: "/home" },
+  { label: "Watch List", icon: "HeartIcon", route: "/bookmark" },
 ];
 
-export const generals: MenuItem = [
-  { label: "Pengaturan", icon: "Cog8ToothIcon", route: "/setting" },
+export const generals: MenuItemList = [
+  { label: "Setting", icon: "Cog8ToothIcon", route: "/setting" },
 ];

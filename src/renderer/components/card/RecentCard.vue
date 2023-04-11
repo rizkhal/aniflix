@@ -5,6 +5,7 @@ import "../../assets/css/tippy.css";
 import { IAnimeResult } from "@consumet/extensions";
 import Icon from "../Icon.vue";
 import { AnimeItem } from "../../typings/index";
+import { wait } from "../../utils";
 
 type ApiResponse = IAnimeResult & AnimeItem;
 
@@ -18,7 +19,10 @@ const { loading, data } = storeToRefs(store);
 
 const onStateChange = (event: any) => {
   if (event.isVisible && event.isEnabled && event.isMounted && event.isShown) {
-    store.fetch(props.item.id);
+    loading.value = true;
+    wait(100).then(() => {
+      store.fetch(props.item.id);
+    });
   } else {
     loading.value = true;
   }
@@ -81,7 +85,7 @@ const onStateChange = (event: any) => {
             <p>{{ data.description?.substring(0, 100) }} ...</p>
           </div>
         </div>
-        <div class="w-full">
+        <div class="w-full flex flex-row space-x-2">
           <button
             @click="
               $router.push({
@@ -92,9 +96,14 @@ const onStateChange = (event: any) => {
                 },
               })
             "
-            class="w-full p-3 rounded bg-slate-400 hover:bg-slate-600 transition-all"
+            class="w-full rounded bg-slate-400 hover:bg-slate-600 transition-all"
           >
             Watch
+          </button>
+          <button
+            class="p-2 rounded bg-slate-400 hover:bg-primary-600 transition-all"
+          >
+            <v-icon name="HeartIcon" class="w-6 h-6" />
           </button>
         </div>
       </div>

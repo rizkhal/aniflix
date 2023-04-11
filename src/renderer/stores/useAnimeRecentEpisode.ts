@@ -27,7 +27,6 @@ export const useAnimeRecentEpisode = defineStore("useAnimeRecentEpisode", {
         .fetchRecentEpisodes()
         .then((response: ApiResponse) => {
           this.data = response;
-          console.log(response);
         })
         .finally(() => {
           this.loading = false;

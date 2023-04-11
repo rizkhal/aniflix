@@ -6,7 +6,6 @@ import {
   TransitionChild,
 } from "@headlessui/vue";
 import {
-  h,
   ref,
   Ref,
   render,
@@ -17,7 +16,6 @@ import {
   watch,
   inject,
   AppContext,
-  onMounted,
   getCurrentInstance,
 } from "vue";
 import { RouteLocationNormalizedLoaded, useRoute } from "vue-router";

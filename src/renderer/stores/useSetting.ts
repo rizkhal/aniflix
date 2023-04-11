@@ -2,7 +2,8 @@ import f from "wretch";
 import { defineStore } from "pinia";
 import { RemovableRef, useLocalStorage } from "@vueuse/core";
 
-const InitialTheme = "System";
+const InitialSidebar = true;
+const InitialTheme = "system";
 const InitialProvider = "Gogoanime";
 const SUPPORTED_PROVIDERS = import.meta.env.VITE_ANIME_PROVIDERS;
 const PROVIDER_URL = `https://raw.githubusercontent.com/consumet/providers-status/main/providers-list.json`;
@@ -19,6 +20,7 @@ interface AnimeProvider {
 
 interface SettingState {
   loading: boolean;
+  sidebar: RemovableRef<boolean>;
   data: Array<AnimeProvider>;
   theme: RemovableRef<string>;
   provider: RemovableRef<string>;
@@ -28,6 +30,7 @@ export const useSetting = defineStore("useSetting", {
   state: (): SettingState => ({
     data: [],
     loading: true,
+    sidebar: useLocalStorage("sidebar", InitialSidebar),
     theme: useLocalStorage("theme", InitialTheme),
     provider: useLocalStorage("provider", InitialProvider),
   }),
@@ -51,6 +54,14 @@ export const useSetting = defineStore("useSetting", {
         .finally(() => {
           this.loading = false;
         });
+    },
+    toggleSidebar() {
+      this.sidebar = !this.sidebar;
+    },
+    async initializeShortcut() {
+      await window.sidebar.toggle(() => {
+        this.$state.sidebar = !this.$state.sidebar;
+      });
     },
     async update(state: UpdateModel) {
       Object.assign(this.$state, state);

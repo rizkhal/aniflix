@@ -72,7 +72,13 @@ export type ProviderFormated = {
 };
 
 export interface MenuItem {
-  [key: number]: { label: string; icon: string; route: RouteLocationRaw };
+  label: string;
+  icon: string;
+  route: string;
+}
+
+export interface MenuItemList {
+  [key: number]: MenuItem;
 }
 
 export type AnilistFeed = { url: string; title: string; poster: string };
