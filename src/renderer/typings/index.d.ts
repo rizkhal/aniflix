@@ -74,6 +74,12 @@ export type Provider = {
   name: string;
 };
 
+export type Setting = {
+  provider: string | null;
+  theme: string | null;
+  proxy: string | null;
+};
+
 export { ISearch, ISource, IAnimeInfo, IAnimeResult };
 
 export type ProviderType = "Gogoanime" | "Zoro";
@@ -89,7 +95,10 @@ export type ProviderRef<T extends ProviderType> = Omit<Ref<T>, "value"> & {
 
 export interface AnimeProvider {
   fetchTopAiring: () => Promise<ISearch<IAnimeResult>>;
-  fetchRecentEpisodes: () => Promise<ISearch<IAnimeResult>>;
+  fetchRecentEpisodes: (
+    page?: number,
+    type?: number
+  ) => Promise<ISearch<IAnimeResult>>;
   fetchAnimeInfo: (id: string) => Promise<IAnimeInfo>;
   fetchEpisodeSources: (
     episodeId: string,

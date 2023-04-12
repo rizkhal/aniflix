@@ -4,20 +4,36 @@ import { useSetting, themes } from "../stores/useSetting";
 import { storeToRefs } from "pinia";
 import { toast } from "vue3-toastify";
 import { ucfirst } from "../utils";
+import { Setting } from "../typings";
 
 const setting = useSetting();
-const { theme, provider, providers } = storeToRefs(setting);
+const { theme, proxy, provider, providers } = storeToRefs(setting);
 
-const model = reactive({
+const model: Setting = reactive({
+  proxy: null,
   theme: theme.value,
   provider: provider.value,
 });
 
 onMounted(() => {
   setting.fetchProviders();
+  proxy.value.then((proxy) => {
+    model.proxy = proxy;
+  });
 });
 
+const isValidIP = (str: string) => {
+  const pattern = /^(\d{1,3}\.){3}\d{1,3}(:\d{1,5})?$/;
+  return pattern.test(str);
+};
+
 const save = () => {
+  if (model.proxy?.length && !isValidIP(model.proxy)) {
+    return toast("Invalid proxy address", {
+      theme: "colored",
+    });
+  }
+
   setting.update(model);
 
   toast("Setting updated", {
@@ -82,6 +98,28 @@ const save = () => {
               {{ ucfirst(theme) }}
             </option>
           </select>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-col md:flex-row border-b border-gray-200 dark:border-slate-900 py-4"
+    >
+      <div class="w-1/3 mx-2 text-slate-700">
+        <span class="font-body dark:text-primary-600">Proxy</span>
+        <div
+          class="text-xs leading-relaxed text-gray-500 font-light dark:text-slate-200"
+        >
+          Create request to server over the proxy
+        </div>
+      </div>
+      <div class="flex-1 flex flex-col md:flex-row sm:mt-2 md:items-center">
+        <div class="w-full flex-1 mx-2">
+          <input
+            type="text"
+            v-model="model.proxy"
+            class="w-full p-2 rounded bg-white shadow-sm border dark:bg-slate-700 dark:border-slate-900 focus:outline-none dark:text-slate-200"
+          />
         </div>
       </div>
     </div>

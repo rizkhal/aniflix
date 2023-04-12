@@ -36,8 +36,7 @@ onMounted(() => {
     <div class="flex flex-row justify-between items-center">
       <v-movie-card-title title="Recents" icon="ClockIcon" />
       <router-link
-        to="/latest"
-        href="#"
+        :to="{ path: '/latest' }"
         class="font-body text-primary-600 text-sm"
         >View All</router-link
       >

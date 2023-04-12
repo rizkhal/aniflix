@@ -7,8 +7,10 @@ import { MenuItem } from "../../../typings";
 import AuthRequiredModal from "../../../components/modal/AuthRequiredModal.vue";
 import { authRequiredRoutes } from "../../../routes";
 import { Ref, h, inject } from "vue";
+import { useAuth } from "../../../stores";
 
 const router = useRouter();
+const auth = useAuth();
 const modal: any = inject<Ref>("modalRef");
 
 const logout = () => {
@@ -74,6 +76,7 @@ const navigate = ({ route }: MenuItem) => {
       </router-link>
 
       <button
+        v-show="auth.isAuth"
         @click.prevent="logout"
         class="flex items-center space-x-2 py-1 group hover:border-r-4 hover:border-r-primary-600 hover:font-semibold"
       >

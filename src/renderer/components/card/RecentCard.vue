@@ -16,7 +16,7 @@ const props = defineProps<{
 
 const store = useAnimeInfo();
 
-const { loading, data } = storeToRefs(store);
+const { error, loading, data } = storeToRefs(store);
 
 const onStateChange = (event: any) => {
   if (event.isVisible && event.isEnabled && event.isMounted && event.isShown) {
@@ -55,11 +55,15 @@ const onStateChange = (event: any) => {
     </div>
 
     <template #content>
-      <div v-if="loading || !data" class="w-full h-full bg-slate-500 p-2">
-        Loading..
+      <div v-if="loading" class="w-full h-full bg-slate-500 p-2">Loading..</div>
+      <div
+        class="w-full h-full bg-slate-500 p-2"
+        v-if="!loading && error"
+      >
+        {{ error }}
       </div>
       <div
-        v-else
+        v-if="!loading && !error && data"
         class="w-72 h-72 flex flex-col justify-between bg-slate-500 p-2"
       >
         <div class="flex flex-col space-y-2">

@@ -14,6 +14,13 @@ export const useAuth = defineStore("auth", {
     errors: undefined,
     loading: false,
   }),
+  getters: {
+    isAuth: (state) => {
+      const token = localStorage.getItem("token");
+
+      return token ? JSON.parse(token) : false;
+    },
+  },
   actions: {
     async login(model: LoginCredentials): Promise<void> {
       this.loading = true;

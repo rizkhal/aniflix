@@ -1,20 +1,15 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useAnimeLatest } from "../stores";
 import { onMounted, ref, watch } from "vue";
-import Pagination from "../components/Pagination.vue";
-import MovieWatchCard from "../components/card/MovieWatchCard.vue";
-import WatchListCardSkeleton from "../components/skeleton/WatchListCardSkeleton.vue";
+import { useAnimeRecentEpisode } from "../stores";
 
-const animex = useAnimeLatest();
-
-const page = ref(1);
+const page = ref<number>(1);
+const store = useAnimeRecentEpisode();
+const { loading, data } = storeToRefs(store);
 
 onMounted(() => {
-  animex.fetch();
+  store.fetch();
 });
-
-const { data, loading, hasMorePages } = storeToRefs(animex);
 
 const onPrev = () => {
   if (page.value > 1) {
@@ -23,36 +18,36 @@ const onPrev = () => {
 };
 
 const onNext = () => {
-  if (hasMorePages.value) {
+  if (data.value?.hasNextPage) {
     page.value++;
   }
 };
 
 watch(
   () => page.value,
-  (val) => animex.fetch(val)
+  (val) => store.fetch(val)
 );
 </script>
 <template>
   <div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-      <WatchListCardSkeleton
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+      <v-watch-list-card-skeleton
         v-if="loading"
         v-for="(i, index) in Array.from({ length: 10 })"
         :key="index * 2"
       />
-      <MovieWatchCard
+      <v-recent-card
         v-else
-        v-for="(item, index) in data"
+        v-for="(item, index) in data?.results"
         :key="index.toString()"
         :item="item"
       />
     </div>
-    <Pagination
+    <v-pagination
       @prev="onPrev"
       @next="onNext"
       :currentPage="page"
-      :hasMorePages="hasMorePages"
+      :hasMorePages="data?.hasNextPage"
     />
   </div>
 </template>

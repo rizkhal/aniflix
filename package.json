@@ -16,6 +16,7 @@
     "url": "https://github.com/rizkhal"
   },
   "devDependencies": {
+    "@types/json-schema": "^7.0.11",
     "@vitejs/plugin-vue": "^4.0.0",
     "autoprefixer": "^10.4.14",
     "chalk": "^4.1.2",

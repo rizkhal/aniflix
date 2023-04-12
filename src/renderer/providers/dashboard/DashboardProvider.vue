@@ -3,9 +3,11 @@ import Modal from "./components/Modal.vue";
 import Navbar from "./components/Navbar.vue";
 import Leftbar from "./components/Leftbar.vue";
 import { useSetting } from "../../stores";
-import { ref, provide, Ref, onMounted } from "vue";
+import { ref, watch, provide, Ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
 const setting = useSetting();
+const route = useRoute();
 const modalRef: Ref<undefined> = ref();
 
 provide("modalRef", modalRef);
@@ -13,6 +15,14 @@ provide("modalRef", modalRef);
 onMounted(() => {
   setting.initializeShortcut();
 });
+
+watch(
+  () => route,
+  (to, from) => {
+    setting.watch();
+  },
+  { deep: true }
+);
 </script>
 <template>
   <div class="flex min-h-screen bg-slate-100 dark:bg-slate-800 w-full">

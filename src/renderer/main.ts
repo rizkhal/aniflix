@@ -8,9 +8,6 @@ import router from "./routes";
 import layout from "./layouts/registerLayout";
 import component from "./components/registerComponent";
 
-import VueVideoPlayer from "@videojs-player/vue";
-import "video.js/dist/video-js.css";
-
 import { plugin as VueTippy } from "vue-tippy";
 import "tippy.js/dist/tippy.css";
 
@@ -22,8 +19,6 @@ const store = createPinia();
 
 app.use(router);
 app.use(store);
-
-app.use(VueVideoPlayer);
 
 // custom layout & component
 app.use(layout);

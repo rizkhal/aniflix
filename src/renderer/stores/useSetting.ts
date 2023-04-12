@@ -1,5 +1,6 @@
 import f from "wretch";
 import { defineStore } from "pinia";
+import { Setting } from "../typings";
 import { RemovableRef, useLocalStorage } from "@vueuse/core";
 
 const InitialSidebar = true;
@@ -7,11 +8,6 @@ const InitialTheme = "system";
 const InitialProvider = "Gogoanime";
 const SUPPORTED_PROVIDERS = import.meta.env.VITE_ANIME_PROVIDERS;
 const PROVIDER_URL = `https://raw.githubusercontent.com/consumet/providers-status/main/providers-list.json`;
-
-interface UpdateModel {
-  provider: string;
-  theme: string;
-}
 
 interface AnimeProvider {
   name: string;
@@ -24,15 +20,17 @@ interface SettingState {
   data: Array<AnimeProvider>;
   theme: RemovableRef<string>;
   provider: RemovableRef<string>;
+  proxy: Promise<string>;
 }
 
 export const useSetting = defineStore("useSetting", {
   state: (): SettingState => ({
     data: [],
     loading: true,
-    sidebar: useLocalStorage("sidebar", InitialSidebar),
     theme: useLocalStorage("theme", InitialTheme),
+    sidebar: useLocalStorage("sidebar", InitialSidebar),
     provider: useLocalStorage("provider", InitialProvider),
+    proxy: window.setting.getProxy().then((state) => state),
   }),
   getters: {
     providers: (state) => {
@@ -44,6 +42,9 @@ export const useSetting = defineStore("useSetting", {
     },
   },
   actions: {
+    async watch() {
+      window.setting.getProxy();
+    },
     async fetchProviders() {
       this.loading = true;
       f(PROVIDER_URL)
@@ -55,19 +56,23 @@ export const useSetting = defineStore("useSetting", {
           this.loading = false;
         });
     },
+    closeSidebar() {
+      this.sidebar = false;
+    },
     toggleSidebar() {
       this.sidebar = !this.sidebar;
     },
     initializeShortcut() {
       // FIXME: not working on first render
-      window.sidebar.toggle(() => {
+      window.setting.toggle(() => {
         this.$state.sidebar = !this.$state.sidebar;
       });
     },
-    update(state: UpdateModel) {
-      Object.assign(this.$state, state);
+    update(model: Setting) {
+      Object.assign(this.$state, model);
+      window.setting.setProxy(model.proxy);
 
-      switch (state.theme) {
+      switch (model.theme) {
         case "system":
           window.darkMode.system();
           break;

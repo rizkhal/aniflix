@@ -4,11 +4,32 @@ import {
   session,
   nativeTheme,
   BrowserWindow,
-  OnHeadersReceivedListenerDetails,
   globalShortcut,
 } from "electron";
 import { join } from "path";
 import setApplicationMenu from "./menu";
+
+import Store, { Schema } from "electron-store";
+
+interface MySchema {
+  setting: {
+    proxy: string;
+  };
+}
+
+const schema: Schema<MySchema> = {
+  setting: {
+    type: "object",
+    properties: {
+      proxy: {
+        type: "string",
+        default: "",
+      },
+    },
+  },
+};
+
+const store = new Store<MySchema>({ schema });
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -19,6 +40,7 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: true,
       webSecurity: false,
+      allowRunningInsecureContent: true,
     },
   });
 
@@ -62,17 +84,29 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
+});
 
-  session.defaultSession.webRequest.onHeadersReceived(
-    (details: OnHeadersReceivedListenerDetails, callback) => {
-      callback({
-        responseHeaders: {
-          ...details.responseHeaders,
-          // "Content-Security-Policy": ["script-src 'self'"],
-        },
-      });
+app.on("ready", function () {
+  session.defaultSession.allowNTLMCredentialsForDomains("*");
+
+  ipcMain.handle("get:proxy", () => {
+    const proxy: string = store.get("proxy");
+
+    if (proxy.length > 0) {
+      const proxyConfig = {
+        proxyRules: proxy,
+        proxyBypassOnLocal: false,
+      };
+
+      session.defaultSession.setProxy(proxyConfig);
     }
-  );
+
+    return proxy;
+  });
+
+  ipcMain.handle("set:proxy", (event, state) => {
+    store.set("proxy", state);
+  });
 });
 
 app.on("activate", function () {
@@ -87,4 +121,8 @@ app.on("window-all-closed", function () {
 
 app.on("will-quit", () => {
   globalShortcut.unregisterAll();
+});
+
+ipcMain.on("message", (event, message) => {
+  console.log(message);
 });

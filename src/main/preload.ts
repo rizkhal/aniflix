@@ -1,10 +1,12 @@
 import { contextBridge, ipcRenderer } from "electron";
 
-contextBridge.exposeInMainWorld("sidebar", {
+contextBridge.exposeInMainWorld("setting", {
   toggle: (cb) => ipcRenderer.on("toggle-sidebar", cb),
+  getProxy: () => ipcRenderer.invoke("get:proxy"),
+  setProxy: (proxy) => ipcRenderer.invoke("set:proxy", proxy),
 });
 
-contextBridge.exposeInMainWorld("electronAPI", {
+contextBridge.exposeInMainWorld("logger", {
   sendMessage: (message: string) => ipcRenderer.send("message", message),
 });
 
